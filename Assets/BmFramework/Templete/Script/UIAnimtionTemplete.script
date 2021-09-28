@@ -1,0 +1,42 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using BmFramework.Core;
+
+public partial class UITemplete : UIAnimationRoot
+{
+	public override void OnOpen(object _data=null)
+	{
+	    base.OnOpen(_data);
+        InitChildCommpent();
+	    //do open animtion here
+	}
+
+	public override void OnOpenAnimation()
+    {
+        //on open animtion start
+    }
+
+    public override void OnOpenAnimationEnd()
+    {
+        //on open animtion end
+    }
+
+    public override void OnCloseAnimation()
+    {
+        //on close animtion start
+    }
+
+    public override void OnCloseAnimationEnd()
+    {
+        base.OnCloseAnimationEnd();
+
+        //on close animtion end
+    }
+
+	public override void OnClose()
+	{
+        base.OnClose();
+	    //do close animtion here
+	}
+}

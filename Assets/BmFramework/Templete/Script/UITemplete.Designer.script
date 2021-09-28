@@ -1,0 +1,12 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using BmFramework.Core;
+
+public partial class UITemplete : UIRoot
+{
+    void InitChildCommpent()
+    {
+        
+    }
+}

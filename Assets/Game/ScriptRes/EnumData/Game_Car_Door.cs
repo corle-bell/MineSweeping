@@ -1,0 +1,23 @@
+public enum Game_Car_Door
+{
+    [EnumName("左前门")]
+    door_forward_left=0,
+    [EnumName("右前门")]
+    door_forward_right=1,
+    [EnumName("左后门")]
+    door_back_left=2,
+    [EnumName("右后门")]
+    door_back_right=3,
+    [EnumName("后备箱")]
+    door_trunk=4,
+    [EnumName("发动机舱")]
+    door_engine=5,
+    [EnumName("左前灯")]
+    light_forward_left=6,
+    [EnumName("右前灯")]
+    light_forward_right=7,
+    [EnumName("左前轮")]
+    wheel_forwad_left=8,
+    [EnumName("右前轮")]
+    wheel_forwad_right=9,
+}
