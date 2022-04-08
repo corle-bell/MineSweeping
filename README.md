@@ -20,8 +20,7 @@ DrawPhycisLine
 
 # 康威生命游戏
 
-DrawPhycisLine
-划线有碰撞和刚体效果
+[enter description here](https://baike.baidu.com/item/%E5%BA%B7%E5%A8%81%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F/22668799?fr=aladdin)
 
 
 # 截图
