@@ -34,18 +34,7 @@ namespace Bm
 
         private void OnEnable()
         {
-			if (!director.playOnAwake)
-			{
-				director.played += OnPlay;
-				director.paused += OnPause;
-				director.stopped += OnEnd;
-			}
-			else
-            {
-				Clear();
-				status = 1;
-				director.stopped += OnEnd;
-			}
+			FixEnable();
 		}
 
         private void OnDisable()
@@ -62,6 +51,7 @@ namespace Bm
 				director.stopped -= OnEnd;
 			}
 		}
+
 
         void OnPlay(PlayableDirector director)
         {
@@ -124,6 +114,23 @@ namespace Bm
 			}
 		}
 
+		private void FixEnable()
+        {
+			if (director == null) return;
+			if (!director.playOnAwake)
+			{
+				director.played += OnPlay;
+				director.paused += OnPause;
+				director.stopped += OnEnd;
+			}
+			else
+			{
+				Clear();
+				status = 1;
+				director.stopped += OnEnd;
+			}
+		}
+
 		public void Reset()
         {
 			director = GetComponent<PlayableDirector>();
@@ -146,6 +153,20 @@ namespace Bm
 				t.mEvent.AddListener(_event);
 			}
 			events.Add(t);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_director"></param>
+		/// <param name="fixEnable"></param>
+		public void SetDirector(PlayableDirector _director, bool fixEnable=true)
+        {
+			director = _director;
+			if(fixEnable)
+            {
+				FixEnable();
+			}
 		}
 	}
 }

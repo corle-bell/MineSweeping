@@ -11,7 +11,7 @@ namespace BmFramework.Core
         internal static string UIPrefab_Path = "Assets/BmFramework/Templete/Prefab";
         internal static string UIScript_Path = "Assets/BmFramework/Templete/Script";
 
-        public static void CreateUIPrefab(string _path, string _name)
+        public static void CreateUIPrefab(string _path, string _name, bool isAnimation)
         {
             if (!Directory.Exists(_path))
             {
@@ -20,7 +20,41 @@ namespace BmFramework.Core
             string path = UIPrefab_Path + "/UITemplete.prefab";
             GameObject tmp = AssetDatabase.LoadAssetAtPath<GameObject>(path);
             tmp = GameObject.Instantiate(tmp);
-            tmp.AddComponentByString(_name);
+            var root = tmp.AddComponentByString(_name);
+
+            if(isAnimation)
+            {
+                UIAnimationRoot aniRoot = root as UIAnimationRoot;
+                var uiAnimtionRes = tmp.AddComponent<UITween_Lerp>();
+                aniRoot.uIAnimationRes = uiAnimtionRes;
+
+                GameObject Open = new GameObject("OpenAni");
+                GameObject Close = new GameObject("OpenClose");
+
+                Open.transform.parent = tmp.transform;
+                Close.transform.parent = tmp.transform;
+
+                uiAnimtionRes.tweenOpen = Open.AddComponent<Bm.Lerp.BmLerpAnimation>();
+                uiAnimtionRes.tweenClose = Close.AddComponent<Bm.Lerp.BmLerpAnimation>();
+
+                var fade = tmp.AddComponent<Bm.Lerp.BmLerpCanvasGroup>();
+
+                uiAnimtionRes.tweenOpen.AddNode(fade);
+                uiAnimtionRes.tweenClose.AddNode(fade);
+
+                uiAnimtionRes.tweenOpen.time = 0.35f;
+                uiAnimtionRes.tweenClose.time = 0.35f;
+
+                uiAnimtionRes.tweenOpen.loop = 1;
+                uiAnimtionRes.tweenClose.loop = 1;
+
+                uiAnimtionRes.tweenOpen.autoPlay = false;
+                uiAnimtionRes.tweenClose.autoPlay = false;
+
+                uiAnimtionRes.tweenClose.isCurve = true;
+                uiAnimtionRes.tweenClose.curve = AnimationCurve.Linear(0, 1, 1, 0);
+            }
+
             bool success = false;
             PrefabUtility.SaveAsPrefabAsset(tmp, string.Format("{0}/{1}.prefab", _path, _name), out success);
             GameObject.DestroyImmediate(tmp);

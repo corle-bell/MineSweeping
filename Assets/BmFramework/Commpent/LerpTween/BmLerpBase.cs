@@ -102,6 +102,11 @@ namespace Bm.Lerp
         {
             return AnimationTo(1.0f, _time);
         }
+
+        public virtual void AnimationShow(float _time)
+        {
+            AnimationTo(1.0f, _time);
+        }
     }
 
 }

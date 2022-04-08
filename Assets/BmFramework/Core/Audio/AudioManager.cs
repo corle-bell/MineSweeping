@@ -8,6 +8,19 @@ namespace BmFramework.Core
     {
         public static AudioManager instance;
 
+        public bool muted
+        {
+            set
+            {
+                _muted = value;
+                MuteAll(0.3f, _muted);
+            }
+            get
+            {
+                return _muted;
+            }
+        }
+
         public float volume
         {
             set
@@ -26,8 +39,11 @@ namespace BmFramework.Core
 
         RefPool nodePool;
         List<AudioNode> usingNodes = new List<AudioNode>();
+        
         [Range(0, 1)]
         private float _volume = 1;
+
+        private bool _muted = false;
         internal void Init()
         {
             nodePool = new RefPool(FrameworkMain.instance.sound_pool_max);
@@ -42,6 +58,14 @@ namespace BmFramework.Core
                     Free(usingNodes[i]);
                 }
             }
+
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                Debug.Log("Sound Ref Pool: "+nodePool.ToString());
+            }
+#endif
+
         }
 
         AudioNode Allocate()
@@ -76,15 +100,31 @@ namespace BmFramework.Core
         }
 
         #region Public
-        public int PlaySound2D(AudioClip clip, bool isLoop=false)
+
+        public int GetCacheCount()
         {
+            return nodePool.GetRefCount();
+        }
+
+        public void CachePoolNode(int _len)
+        {
+            for(int i=0; i<_len; i++)
+            {
+                nodePool.Add(new AudioNode());
+            }
+        }
+
+        public int PlaySound2D(AudioClip clip, bool isLoop=false, float _pitch=1)
+        {
+            if (clip == null || _muted) return -1;
             AudioNode node = Allocate();
-            node.PlaySound2D(clip, isLoop);
+            node.PlaySound2D(clip, isLoop, _pitch);
             return node.handle;
         }
 
         public int PlaySoundAtPoint(AudioClip clip, Vector3 Pos, bool isLoop = false)
         {
+            if (clip == null || _muted) return -1;
             AudioNode node = Allocate();
             node.PlaySoundAtPoint(clip, Pos, isLoop);
             return node.handle;
@@ -158,6 +198,19 @@ namespace BmFramework.Core
                 usingNodes[i].Stop(_time);
             }
         }
+
+        /// <summary>
+        /// stop all sound
+        /// </summary>
+        /// <param name="_time"></param>
+        public void MuteAll(float _time = 0, bool _isMute=true)
+        {
+            for (int i = 0; i < usingNodes.Count; i++)
+            {
+                usingNodes[i].Mute(_time, _isMute);
+            }
+        }
+
         #endregion
     }
 }

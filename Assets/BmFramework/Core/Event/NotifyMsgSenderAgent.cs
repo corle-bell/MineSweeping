@@ -9,9 +9,12 @@ namespace BmFramework.Core
         [EnumName("指令:")]
         public NotifyType type;
         public string msg;
+        public Object ParamsObj;
+        public int ParamsInt;
+        public float ParamsFloat;
         public void Post()
         {
-            NotifacitionManager.Post(type, this, msg);
+            NotifacitionManager.Post(type, this, msg, ParamsInt, ParamsFloat, ParamsObj);
         }
     }
 }

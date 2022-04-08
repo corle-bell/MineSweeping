@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02313c4fd1ca67f47a68d6ae0b03081a, type: 3}
+  m_Name: Game_Def
+  m_EditorClassIdentifier: 
+  list:
+  - status: 1
+    name: SDK_FB
+    desc: "\u662F\u5426\u6709facebook"
+  - status: 0
+    name: SDK_Crazylabs
+    desc: "Crazylabs\u7684SDK"
+  - status: 0
+    name: SDK_Voodoo
+    desc: "Voodoo\u7684SDK"
+  - status: 1
+    name: ODIN_INSPECTOR
+    desc: 
+  - status: 1
+    name: ODIN_INSPECTOR_3
+    desc: 
+  - status: 1
+    name: VS_ATT
+    desc: 
+  - status: 1
+    name: OBI_ONI_SUPPORTED
+    desc: 
+  - status: 1
+    name: SDK_TalkingData
+    desc: "talkingdata\u7EDF\u8BA1"
+  - status: 1
+    name: SDK_GA
+    desc: "GA\u7EDF\u8BA1"
+  - status: 0
+    name: SDK_Tenjin
+    desc: "Tenjin\u5F52\u56E0\u7EDF\u8BA1"
+  - status: 1
+    name: gameanalytics_max_enabled
+    desc: 
+  - status: 1
+    name: AD_MAX
+    desc: "Max\u5E7F\u544ASDK"
+  - status: 1
+    name: GPU_INSTANCER
+    desc: 
+  - status: 1
+    name: AMPLIFY_SHADER_EDITOR
+    desc: 
+  - status: 1
+    name: CROSS_PLATFORM_INPUT
+    desc: 
+  - status: 1
+    name: MOBILE_INPUT
+    desc: 
+  - status: 1
+    name: UCONTEXT_PRO
+    desc: 
+  - status: 1
+    name: UCONTEXT
+    desc: 
+  - status: 1
+    name: TD_GAME
+    desc: "TalkingData\u6E38\u620F\u6807\u7B7E"

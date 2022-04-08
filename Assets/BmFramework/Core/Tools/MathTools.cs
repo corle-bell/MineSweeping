@@ -188,7 +188,7 @@ public class MathTools
         //return (1 - t) * ((1 - t) * ((1 - t) * p0 + t * p1) + t * ((1 - t) * p1 + t * p2)) + t * ((1 - t) * ((1 - t) * p1 + t * p2) + t * ((1 - t) * p2 + t * p3));
     }
 
-    public static Vector3 GetSplinePoint(Vector3[] pts, float t)
+    public static Vector3 GetSplinePoint(Vector3[] pts, float t, Transform _parent=null)
     {
         int numSections = pts.Length - 3;
         int currPt = Mathf.Min(Mathf.FloorToInt(t * (float)numSections), numSections - 1);
@@ -199,6 +199,14 @@ public class MathTools
         Vector3 p2 = pts[currPt + 2];
         Vector3 p3 = pts[currPt + 3];
 
+        if (_parent != null)
+        {
+            p0 = _parent.TransformPoint(pts[currPt]);
+            p1 = _parent.TransformPoint(pts[currPt + 1]);
+            p2 = _parent.TransformPoint(pts[currPt + 2]);
+            p3 = _parent.TransformPoint(pts[currPt + 3]);
+        }
+
         return 0.5f * (
             (-p0 + 3f * p1 - 3f * p2 + p3) * (u * u * u)
             + (2f * p0 - 5f * p1 + 4f * p2 - p3) * (u * u)
@@ -206,7 +214,7 @@ public class MathTools
             + 2f * p1
             );
     }
-    public static Vector3 GetSplinePoint(List<Vector3> pts, float t)
+    public static Vector3 GetSplinePoint(List<Vector3> pts, float t, Transform _parent=null)
     {
         int numSections = pts.Count - 3;
         int currPt = Mathf.Min(Mathf.FloorToInt(t * (float)numSections), numSections - 1);
@@ -216,6 +224,14 @@ public class MathTools
         Vector3 p1 = pts[currPt + 1];
         Vector3 p2 = pts[currPt + 2];
         Vector3 p3 = pts[currPt + 3];
+
+        if (_parent!=null)
+        {
+            p0 = _parent.TransformPoint(pts[currPt]);
+            p1 = _parent.TransformPoint(pts[currPt + 1]);
+            p2 = _parent.TransformPoint(pts[currPt + 2]);
+            p3 = _parent.TransformPoint(pts[currPt + 3]);
+        }
 
         return 0.5f * (
             (-p0 + 3f * p1 - 3f * p2 + p3) * (u * u * u)
@@ -249,4 +265,42 @@ public class MathTools
     {
         return Mathf.Abs(_a - _b) <= Mathf.Epsilon;
     }
+
+    public static float PerlinNoiseRandom(float _a, float _b, float _x, float _y)
+    {
+        float len = Mathf.Abs(_a - _b);
+        return Mathf.PerlinNoise(_x, _y) * len + Mathf.Min(_a, _b);
+    }
+
+    #region 生成高斯分布数
+    // mean：均值，variance：方差
+    // min和max用于去掉不需要的偏差值
+    public static float NextGaussian(float mean, float variance, float min, float max)
+    {
+        float x;
+        do
+        {
+            x = NextGaussian(mean, variance);
+        } while (x < min || x > max);
+        return x;
+    }
+
+    public static float NextGaussian(float mean, float standard_deviation)
+    {
+        return mean + NextGaussian() * standard_deviation;
+    }
+
+    public static float NextGaussian()
+    {
+        float v1, v2, s;
+        do
+        {
+            v1 = 2.0f * UnityEngine.Random.Range(0f, 1f) - 1.0f;
+            v2 = 2.0f * UnityEngine.Random.Range(0f, 1f) - 1.0f;
+            s = v1 * v1 + v2 * v2;
+        } while (s >= 1.0f || s == 0f);
+        s = Mathf.Sqrt((-2.0f * Mathf.Log(s)) / s);
+        return v1 * s;
+    }
+    #endregion
 }

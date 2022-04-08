@@ -95,6 +95,12 @@ public static class FrameworkTools
 		return UnityEngine.Random.Range(_min, _max);
 	}
 
+	public static Vector3 RanomdInCircle(float _radius, Vector3 _zero_dir, Vector3 _normal)
+	{
+		return Quaternion.AngleAxis(UnityEngine.Random.Range(0f, 360), _normal) * (_zero_dir.normalized*_radius);
+	}
+
+
 	public static int GetClassValueByNameInt(object obj, string _key)
 	{
 		return GetClassValueByName<int>(obj, _key);
@@ -327,6 +333,22 @@ public static class FrameworkTools
 		return zero;
 	}
 
+	public static float[] stringToFloatArray(string _text, string _flag = ",")
+	{
+		string[] arr = Split(_text, _flag);
+		if (arr.Length == 0)
+		{
+			return null;
+		}
+		float[] ret = new float[arr.Length];
+		for (int i = 0; i < ret.Length; i++)
+		{
+			if (arr[i] == "") continue;
+			ret[i] = float.Parse(arr[i]);
+		}
+		return ret;
+	}
+
 	public static int [] stringToIntArray(string _text, string _flag=",")
 	{
 		string [] arr = Split(_text, _flag);
@@ -455,6 +477,17 @@ public static class FrameworkTools
 		return sb.ToString();
 	}
 
+	public static string StringArrayToString(string[] SafetyMeasure)
+	{
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < SafetyMeasure.Length - 1; i++)
+		{
+			sb.Append(SafetyMeasure[i] + ",");
+		}
+		sb.Append(SafetyMeasure[SafetyMeasure.Length - 1]);
+		return sb.ToString();
+	}
+
 	public static string FloatArrayToString(float[] SafetyMeasure) 
 	{
 		StringBuilder sb = new StringBuilder();
@@ -474,12 +507,6 @@ public static class FrameworkTools
 	public static bool IsInArray<T>(T[] _t, int _id)
 	{
 		return (_id >= 0 && _id < _t.Length);
-	}
-
-	public static float LerpFloat(float _min, float _max, float _v)
-	{
-		float lerp = _max - _min;
-		return _min+lerp*_v;
 	}
 
 	public static void Swap<T>(ref T _t1, ref T _t2)

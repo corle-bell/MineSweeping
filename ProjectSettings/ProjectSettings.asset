@@ -672,7 +672,8 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: UCONTEXT_PRO;UCONTEXT
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}

@@ -27,6 +27,9 @@ namespace Bm.Lerp
         [EnumName("速度曲线")]
         public AnimationCurve speedCurve = AnimationCurve.Linear(0, 1, 1, 1);
 
+        [EnumName("时间轴缩放")]
+        public float TimeScale=1;
+
         public int status = 0;
         protected float tick = 0;
         private bool isForward;
@@ -47,6 +50,12 @@ namespace Bm.Lerp
             Play(_loop);
         }
 
+        public void PlayWithTime(float _time, int _loop = 1)
+        {
+            tick = _time;
+            Play(_loop);
+        }
+
         public void Play(int _loop = 1)
         {
             loop = _loop;
@@ -55,7 +64,14 @@ namespace Bm.Lerp
             InitLerp(0);
         }
 
-
+        public void PlayBack()
+        {
+            isForward = false;
+            pingPang = true;
+            loop = 1;
+            status = 1;
+            InitLerp(0);
+        }
 
         public void Stop()
         {
@@ -73,20 +89,25 @@ namespace Bm.Lerp
 
         private void Update()
         {
+            Logic((ignoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime));
+        }
+
+        public void Logic(float deltaTime)
+        {
             switch (status)
             {
                 case 1:
-                    
-                    tick += (ignoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime)*speed;
+
+                    tick += TimeScale * deltaTime * speed;
                     tick = tick > time ? time : tick;
-                    LerpPingPang(tick / time);                    
-                    if (tick>=time)
+                    LerpPingPang(tick / time);
+                    if (tick >= time)
                     {
                         tick = 0;
-                        if(loop>0)
+                        if (loop > 0)
                         {
                             loop--;
-                            status = loop==0?0:1;
+                            status = loop == 0 ? 0 : 1;
                         }
                         isForward = !isForward;
                         CleanExec();

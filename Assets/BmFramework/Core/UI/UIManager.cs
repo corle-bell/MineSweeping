@@ -22,12 +22,22 @@ namespace BmFramework.Core
         [HideInInspector]
         public List<string> NameList = new List<string>();
 
+        public float scaleFactor = 1.0f;
         internal void Init()
         {
             canvas = GetComponentInChildren<Canvas>();
             CanvasScaler scaler = canvas.GetComponent<CanvasScaler>();
 
             scaler.referenceResolution = FrameworkMain.instance.screenSize;
+   
+
+            float kLogBase = 2;
+            Vector2 screenSize = new Vector2(Screen.width, Screen.height);
+            float logWidth = Mathf.Log(screenSize.x / scaler.referenceResolution.x, kLogBase);
+            float logHeight = Mathf.Log(screenSize.y / scaler.referenceResolution.y,kLogBase);
+            float logWeightedAverage = Mathf.Lerp(logWidth,logHeight, scaler.matchWidthOrHeight);
+            scaleFactor = Mathf.Pow(kLogBase, logWeightedAverage);
+
 
             float w_p = scaler.referenceResolution.x;
             float h_p = scaler.referenceResolution.y;

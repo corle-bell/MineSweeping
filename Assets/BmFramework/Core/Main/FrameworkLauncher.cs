@@ -12,6 +12,16 @@ namespace BmFramework.Core
         [EnumName("启动后的UI")]
         public string LauncheUI;
 
+        [EnumName("设定帧率")]
+        public int FrameRate = 60;
+
+        private void Awake()
+        {
+#if UNITY_EDITOR
+#else
+        Application.targetFrameRate = FrameRate;
+#endif
+        }
 
         // Start is called before the first frame update
         void Start()

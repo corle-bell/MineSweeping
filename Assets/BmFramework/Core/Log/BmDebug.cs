@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace BmFramework.Core
 {
-    public class BmDebug : MonoBehaviour
+    [ExecuteInEditMode]
+    public static class BmDebug
     {
         internal static BmBaseLog logInstance;
 
@@ -20,11 +21,47 @@ namespace BmFramework.Core
             }
         }
 
-        internal static string Format(string flag, object message)
+        internal static string Format(string flag, object message, string _color= "#ffffff")
         {
-            return string.Format("[{0}] : {1}", flag, message);
+            return string.Format("<color={0}>[{1}] : {2}</color>", _color, flag, message);
         }
 
+#if UNITY_EDITOR
+        public static void Info(object message)
+        {
+            if(!Application.isPlaying)
+            {
+                Debug.Log(BmDebug.Format("Info", message, "#00ff00"));
+            }
+            else
+            {
+                logInstance.Info(message);
+            }
+        }
+        public static void Warnning(object message)
+        {
+            if (!Application.isPlaying)
+            {
+                Debug.Log(BmDebug.Format("Warning", message, "#ffff00"));
+            }
+            else
+            {
+                logInstance.Warning(message);
+            }
+            
+        }
+        public static void Error(object message)
+        {
+            if (!Application.isPlaying)
+            {
+                Debug.Log(BmDebug.Format("Error", message, "#ff0000"));
+            }
+            else
+            {
+                logInstance.Error(message);
+            }
+        }
+#else 
         public static void Info(object message)
         {
             logInstance.Info(message);
@@ -37,5 +74,6 @@ namespace BmFramework.Core
         {
             logInstance.Error(message);
         }
+#endif
     }
 }

@@ -18,6 +18,7 @@ namespace BmFramework.Core
         [EnumName("是否在Dev模式")]
         public bool isDev=true;
 
+
         UIKit uiKit;
         DataKit dataKit;
         AudioKit audioKit;

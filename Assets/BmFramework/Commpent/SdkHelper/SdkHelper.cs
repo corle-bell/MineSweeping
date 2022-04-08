@@ -18,6 +18,7 @@ namespace Bm.Sdk.Helper
         public static AdHelper Ad;
         public static IapHelper Iap;
 
+        public static Sdk_ChannelData ChannelData;
 
         public bool isInit = false;
 
@@ -25,6 +26,7 @@ namespace Bm.Sdk.Helper
         // Start is called before the first frame update
         void Awake()
         {
+            isInit = false;
             instance = this;
             DontDestroyOnLoad(gameObject);
 
@@ -37,6 +39,10 @@ namespace Bm.Sdk.Helper
             if (isInit) return;
             isInit = true;
 
+
+            ChannelData = new Sdk_ChannelData();
+            ChannelData.channel = NativeHelper.GetAppVersion();
+
             Analysis = new AnalysisHelper();
             Analysis.Init();
 
@@ -45,6 +51,7 @@ namespace Bm.Sdk.Helper
 
             Iap = new IapHelper();
             Iap.Init();
+
         }
 
         public void OnApplicationPause(bool isPause)

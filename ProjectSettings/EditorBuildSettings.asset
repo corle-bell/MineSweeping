@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Game/Scenes/Main.unity
     guid: 299df6ed9952c5044a329dc460b740e5
   - enabled: 1
-    path: Assets/Game/Scenes/Game.unity
+    path: Assets/Game/Scenes/MineSweeping/Game.unity
     guid: c5c814721cae26b4caf6604627430df2
+  - enabled: 1
+    path: Assets/Game/Scenes/LifeGame/LifeGame.unity
+    guid: 56bafc2c02de64241ae1a8a1291ec249
   m_configObjects: {}

@@ -8,17 +8,17 @@ namespace BmFramework.Core
     {
         internal override void Error(object message)
         {
-            Debug.LogError(BmDebug.Format("Error", message));
+            Debug.Log(BmDebug.Format("Error", message, "#00ff00"));
         }
 
         internal override void Info(object message)
         {
-            Debug.Log(BmDebug.Format("Info", message));
+            Debug.Log(BmDebug.Format("Info", message, "#00ff00"));
         }
 
         internal override void Warning(object message)
         {
-            Debug.LogWarning(BmDebug.Format("Warning", message));
+            Debug.Log(BmDebug.Format("Warning", message, "#ffff00"));
         }
     }
 }

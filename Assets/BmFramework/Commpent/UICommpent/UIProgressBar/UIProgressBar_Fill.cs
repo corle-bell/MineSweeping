@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIProgressBar_Fill : UIProgressBar
 {
-    public Image fill;     
+    public Image fill;
     private void Start()
     {
         Init();

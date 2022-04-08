@@ -21,6 +21,14 @@ public static class VectorExtensionMethodes
         return new Vector2(rect.xMax, rect.yMax);
     }
 
+    public static Vector2 Max(this Vector2 vec, Vector2 oper)
+    {
+        Vector3 ret = vec;
+        ret.x = Mathf.Max(ret.x, oper.x);
+        ret.y = Mathf.Max(ret.y, oper.y);
+        return ret;
+    }
+
     public static Vector2 IntersectionWithRayFromCenter(this Rect rect, Vector2 pointOnRay)
     {
         Vector2 pointOnRay_local = pointOnRay - rect.center;
@@ -39,5 +47,28 @@ public static class VectorExtensionMethodes
         Oper1.y *= Oper2.y;
         Oper1.z *= Oper2.z;
         return Oper1;
+    }
+
+    public static Vector3 Normalized_XZ(this Vector3 Oper1, Vector3 Oper2)
+    {
+        var t = Oper2;
+        t.y = Oper1.y;
+        return (Oper1-t).normalized;
+    }
+
+
+    public static Vector3 Abs(this Vector3 vec)
+    {
+        for (int i = 0; i < 3; ++i) vec[i] = Mathf.Abs(vec[i]);
+        return vec;
+    }
+
+    public static Vector3 Max(this Vector3 vec, Vector3 oper)
+    {
+        Vector3 ret = vec;
+        ret.x = Mathf.Max(ret.x, oper.x);
+        ret.y = Mathf.Max(ret.y, oper.y);
+        ret.z = Mathf.Max(ret.z, oper.z);
+        return ret;
     }
 }

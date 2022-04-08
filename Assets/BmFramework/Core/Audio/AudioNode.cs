@@ -44,12 +44,23 @@ namespace BmFramework.Core
             Destroy(player.gameObject);
         }
 
-        public void PlaySound2D(AudioClip clip, bool _loop=false)
+        public void PlaySound2D(AudioClip clip, bool _loop=false, float _pitch=1.0f)
         {
-            player.PlayOneShot(clip);
-            player.loop = _loop;
+            if(_loop)
+            {
+                player.clip = clip;
+                player.loop = _loop;
+                player.Play();
+            }
+            else
+            {
+                player.PlayOneShot(clip);
+            }
             player.volume = AudioManager.instance.volume;
+            player.pitch = _pitch;
+            player.mute = false;
         }
+
 
         public void PlaySoundAtPoint(AudioClip clip, Vector3 Pos, bool _loop)
         {
@@ -58,6 +69,7 @@ namespace BmFramework.Core
             player.loop = _loop;
             player.spatialBlend = 1;
             player.volume = AudioManager.instance.volume;
+            player.mute = false;
             player.Play();
         }
 
@@ -110,6 +122,20 @@ namespace BmFramework.Core
                 player.DOFade(0, _time).OnComplete(() => {
                     isPause = false;
                     player.Stop();
+                });
+            }
+        }
+
+        public void Mute(float _time = 0, bool _isMute=true)
+        {
+            if (_time == 0)
+            {
+                player.mute = _isMute;
+            }
+            else
+            {
+                player.DOFade(_isMute?0:AudioManager.instance.volume, _time).OnComplete(() => {                    
+                    player.mute = _isMute;
                 });
             }
         }

@@ -37,9 +37,14 @@ public class UIProgressBar : MonoBehaviour
         }
     }
 
+    public void SetPercent(int number, int max=100)
+    {
+        SetPercent(number/(float)max);
+    }
+
     protected void UpdateNumber()
     {
-        if(number!=null) number.number = (int)(convert * percent);
+        if(number!=null) number.number = Mathf.RoundToInt((convert * percent));
     }
 
     public virtual void Clear()
@@ -83,10 +88,17 @@ public class UIProgressBar : MonoBehaviour
         }
     }
 
-    public void AnimationTo(float value, float time)
+    public Tweener AnimationTo(float value, float time)
     {
-        DOTween.To(() => percent, x => percent = x, value, time).OnUpdate(()=> {
+        if (percent >= 1.0f) return null;
+        return DOTween.To(() => percent, x => percent = x, value, time).OnUpdate(()=> {
             SetPercent(percent);
         });
+    }
+
+    public Tweener AnimationTo(int number, int max = 100, float time=0.35f)
+    {
+        float p = ((float)number) / max;
+        return AnimationTo(p, time);
     }
 }

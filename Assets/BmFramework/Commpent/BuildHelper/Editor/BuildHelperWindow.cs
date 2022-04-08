@@ -20,9 +20,12 @@ namespace Bm.Helper.Build
         int _versonCode = 0;
         string _faceBookId;
         string _packageName;
+        bool isAutoGraphics;
         ScriptingImplementation buildType;
+        UIOrientation uIOrientation;
         Texture2D icon;
         bool isEdit;
+
 
 
         string[] pop_data_achive = new string[] { "NONE", "ARM64", "All" };
@@ -49,10 +52,19 @@ namespace Bm.Helper.Build
                 _versonCode = EditorGUILayout.IntField("构建版本号", _versonCode);
                 _name = EditorGUILayout.TextField("应用名称", _name);
                 _faceBookId = EditorGUILayout.TextField("FacebookId", _faceBookId);
+                uIOrientation = (UIOrientation)EditorGUILayout.EnumPopup("默认屏幕方向:", uIOrientation);
                 buildType = (ScriptingImplementation)EditorGUILayout.EnumPopup("编译模式:", buildType);                                
                 icon = (Texture2D)EditorGUILayout.ObjectField("图标", icon, typeof(Texture2D));
+                isAutoGraphics = EditorGUILayout.Toggle("AutoGraphics", isAutoGraphics);
 
 
+                if (GUILayout.Button("设置默认配置"))
+                {
+                    uIOrientation = UIOrientation.Portrait;
+                    buildType = ScriptingImplementation.IL2CPP;
+                    isAutoGraphics = true;
+                    PlayerSettings.SetArchitecture(BuildTargetGroup.Android, 2);
+                }
                 if (GUILayout.Button("更改配置"))
                 {
                     SaveConfig();
@@ -95,8 +107,11 @@ namespace Bm.Helper.Build
             _name = UnityEditor.PlayerSettings.productName;   //产品名，应用名称             
             _versonCode = UnityEditor.PlayerSettings.Android.bundleVersionCode;
             buildType = PlayerSettings.GetScriptingBackend(BuildTargetGroup.Android);
+            isAutoGraphics = UnityEditor.PlayerSettings.GetUseDefaultGraphicsAPIs(BuildTarget.Android);
+            uIOrientation = PlayerSettings.defaultInterfaceOrientation;
 
-            #if SDK_FB
+
+#if SDK_FB
             _faceBookId = Facebook.Unity.Settings.FacebookSettings.AppId;
             #endif
 
@@ -114,8 +129,9 @@ namespace Bm.Helper.Build
            
             UnityEditor.PlayerSettings.Android.bundleVersionCode = _versonCode;
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, buildType);
-
-            #if SDK_FB
+            UnityEditor.PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.Android, isAutoGraphics);
+            PlayerSettings.defaultInterfaceOrientation = uIOrientation;
+#if SDK_FB
             Facebook.Unity.Settings.FacebookSettings.AppIds[0] = _faceBookId;
             Facebook.Unity.Settings.FacebookSettings.AppLabels[0] = _name;
             EditorUtility.SetDirty(Facebook.Unity.Settings.FacebookSettings.Instance);
@@ -125,6 +141,7 @@ namespace Bm.Helper.Build
             if (buildType == ScriptingImplementation.IL2CPP)
             {
                 PlayerSettings.SetArchitecture(BuildTargetGroup.Android, 2);
+                
             }
 
             _setDefaultIcon(icon);

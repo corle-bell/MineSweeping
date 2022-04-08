@@ -48,6 +48,7 @@ namespace BmFramework.Core
 
             this.AddButton("Find", this.FindPrefab);
             this.AddButton("Open", this.OpenPrefab);
+            this.AddButton("Delete", this.DeletePrefab);
         }
 
         private void OnGUI()
@@ -96,6 +97,25 @@ namespace BmFramework.Core
             GUIUtility.ExitGUI();
         }
 
-        
+        void DeletePrefab(int _id)
+        {
+            EditorMessgeBox.Open("提示", "确定要删除么？", "是", "否", (bool isSure) =>
+            {
+                if(isSure)
+                {
+                    UINode t = nodeList[_id] as UINode;
+
+                    AssetDatabase.DeleteAsset(t.asset_path);
+                    AssetDatabase.DeleteAsset("Assets/Game/Script/UI" + t.name + ".cs");
+                    AssetDatabase.DeleteAsset("Assets/Game/Script/UI" + t.name + ".Designer.cs");
+
+                    AssetDatabase.Refresh();
+                }
+            });
+
+            
+
+            GUIUtility.ExitGUI();
+        }
     }
 }

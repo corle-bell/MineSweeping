@@ -12,6 +12,13 @@ public static class UICommpentExtensionMethodes
         graphic.color = t;
     }
 
+    public static void SetAlpha(this SpriteRenderer render, float a)
+    {
+        Color t = render.color;
+        t.a = a;
+        render.color = t;
+    }
+
     public static void FadeTo(this Graphic graphic, float a, float _time)
     {
         Color t = graphic.color;

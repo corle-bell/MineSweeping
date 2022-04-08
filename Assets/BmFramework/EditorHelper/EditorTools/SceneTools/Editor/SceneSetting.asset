@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342ba5b9326a3934d8e0a023556734b9, type: 3}
+  m_Name: SceneSetting
+  m_EditorClassIdentifier: 
+  flagFilter: 2
+  scanPath: Assets/Game/Scenes
+  sceneNodes:
+  - name: Main.unity
+    fullName: Assets/Game/Scenes/Main.unity
+    assetName: Assets/Game/Scenes/Main.unity
+    nickName: Main
+    isInBuild: 1
+    flag: 4
+    isShow: 1
+  - name: DrawLineSample.unity
+    fullName: Assets/Game/Scenes/DrawLine3D/DrawLineSample.unity
+    assetName: Assets/Game/Scenes/DrawLine3D/DrawLineSample.unity
+    nickName: DrawLineSample
+    isInBuild: 0
+    flag: 4
+    isShow: 1
+  - name: Game.unity
+    fullName: Assets/Game/Scenes/MineSweeping/Game.unity
+    assetName: Assets/Game/Scenes/MineSweeping/Game.unity
+    nickName: Game
+    isInBuild: 1
+    flag: 4
+    isShow: 1
+  - name: LifeGame.unity
+    fullName: Assets/Game/Scenes/LifeGame/LifeGame.unity
+    assetName: Assets/Game/Scenes/LifeGame/LifeGame.unity
+    nickName: LifeGame
+    isInBuild: 1
+    flag: 4
+    isShow: 1
+  isScan: 0
+  isOnlyShowBuild: 0

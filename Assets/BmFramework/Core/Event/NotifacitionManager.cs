@@ -223,6 +223,88 @@ namespace BmFramework.Core
         }
 
         /// <summary>
+        /// 发送事件
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="sender"></param>
+        /// <param name="_Cmd"></param>
+        /// <param name="_params_f"></param>
+        public static void Post(NotifyType type, object sender, string _Cmd, float _params_f)
+        {
+            NotifyEvent t = AllocateEvent();
+            t.Type = type;
+            t.Cmd = _Cmd;
+            t.Sender = sender;
+            t.ParamsFloat = _params_f;
+
+            Post(t);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="sender"></param>
+        /// <param name="_Cmd"></param>
+        /// <param name="_params_i"></param>
+        /// <param name="_params_f"></param>
+        public static void Post(NotifyType type, object sender, string _Cmd, int _params_i, float _params_f)
+        {
+            NotifyEvent t = AllocateEvent();
+            t.Type = type;
+            t.Cmd = _Cmd;
+            t.Sender = sender;
+            t.ParamsInt = _params_i;
+            t.ParamsFloat = _params_f;
+
+            Post(t);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="sender"></param>
+        /// <param name="_Cmd"></param>
+        /// <param name="_params_i"></param>
+        /// <param name="_params_f"></param>
+        /// <param name="obj"></param>
+        public static void Post(NotifyType type, object sender, string _Cmd, int _params_i, float _params_f, UnityEngine.Object obj)
+        {
+            NotifyEvent t = AllocateEvent();
+            t.Type = type;
+            t.Cmd = _Cmd;
+            t.Sender = sender;
+            t.ParamsInt = _params_i;
+            t.ParamsFloat = _params_f;
+            t.GameObj = obj;
+
+            Post(t);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="sender"></param>
+        /// <param name="_Cmd"></param>
+        /// <param name="_params_i"></param>
+        /// <param name="_params_f"></param>
+        /// <param name="_obj"></param>
+        public static void Post(NotifyType type, object sender, string _Cmd, int _params_i, float _params_f, string _obj)
+        {
+            NotifyEvent t = AllocateEvent();
+            t.Type = type;
+            t.Cmd = _Cmd;
+            t.Sender = sender;
+            t.ParamsInt = _params_i;
+            t.ParamsFloat = _params_f;
+            t.ParamsString = _obj;
+
+            Post(t);
+        }
+
+        /// <summary>
         /// 添加监听
         /// </summary>
         /// <param name="type"></param>

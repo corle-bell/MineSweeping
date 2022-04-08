@@ -69,24 +69,32 @@ namespace BmFramework.Core
         /// <param name="_left_count"></param>
         void LoadOne(ResLoadCell _res, ref int _left_count)
         {
-            while(_left_count>0 && _res.number>0)
+            try
             {
-                Object tmp = _res.isInstantiate?Instantiate(_res.preload):_res.preload;
-                NotifacitionManager.Post(NotifyType.Msg_Resouce_Load, _res.path, tmp);
-                
-                _res.number--;
-                _left_count--;
+                while (_left_count > 0 && _res.number > 0 && status==1)
+                {
+                    Object tmp = _res.preload==null?null:(_res.isInstantiate ? Instantiate(_res.preload) : _res.preload);
 
-                _res.callback?.OnLoad(_res.path, tmp, _res.data);
+                    _res.number--;
+                    _left_count--;
+
+                    _res.callback?.OnLoad(_res.path, tmp, _res.data);
+                    NotifacitionManager.Post(NotifyType.Msg_Resouce_Load, _res.path, tmp);
+                    
+                }
+
+                if (_res.number <= 0)
+                {
+                    number--;
+                    _res.callback = null;
+                    _res.data = null;
+                    _res.preload = null;
+                    resLoadCells.Remove(_res);
+                }
             }
-
-            if (_res.number <= 0)
+            catch (System.Exception e)
             {
-                number--;
-                _res.callback = null;
-                _res.data = null;
-                _res.preload = null;
-                resLoadCells.Remove(_res);
+                BmDebug.Error("Res Load Error: "+_res.path+" number:"+ _res.number+" left:"+ _left_count+"  "+e.ToString());
             }
         }
 
@@ -103,6 +111,9 @@ namespace BmFramework.Core
         /// <param name="_data">传入参数</param>
         public void LoadRes<T>(string _path, int _number, IResLoadCallback _callback=null, bool _isInstantiate = true, object _data=null) where T:UnityEngine.Object
         {
+
+            status = 0;
+
             ResLoadCell resLoadCell = new ResLoadCell();
             resLoadCell.path = _path;
             resLoadCell.number = _number;
@@ -114,11 +125,14 @@ namespace BmFramework.Core
 
             StartCoroutine(LoadResouce<T>(resLoadCell));
 
-            status = 0;
+
         }
 
         public void LoadRes(string _path, int _number, IResLoadCallback _callback = null, bool _isInstantiate = true, object _data = null)
         {
+
+            status = 0;
+
             ResLoadCell resLoadCell = new ResLoadCell();
             resLoadCell.path = _path;
             resLoadCell.number = _number;
@@ -130,7 +144,6 @@ namespace BmFramework.Core
 
             StartCoroutine(LoadResouce(resLoadCell));
 
-            status = 0;
         }
 
         /// <summary>
@@ -164,6 +177,7 @@ namespace BmFramework.Core
         /// </summary>
         void PreloadOver()
         {
+
             number++;
             if(number>=resLoadCells.Count)
             {

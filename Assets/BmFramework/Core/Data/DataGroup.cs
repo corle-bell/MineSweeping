@@ -7,6 +7,7 @@ namespace BmFramework.Core
     {
         public Dictionary<string, int> intData = null;
         public Dictionary<string, bool> boolData = null;
+        public Dictionary<string, float> floatData = null;
         public Dictionary<string, string> stringData = null;
         public Dictionary<string, object> objData = new Dictionary<string, object>();
 
@@ -80,6 +81,30 @@ namespace BmFramework.Core
 
         #endregion
 
+        #region float data
+        public void SetFloat(string key, float _data)
+        {
+            if (!floatData.ContainsKey(key))
+            {
+                floatData.Add(key, _data);
+            }
+            else
+            {
+                floatData[key] = _data;
+            }
+        }
+
+        public float GetFloat(string key, float _default)
+        {
+            if (floatData.ContainsKey(key))
+            {
+                return floatData[key];
+            }
+            return _default;
+        }
+
+        #endregion
+
         #region string data
         public void SetString(string key, string _data)
         {
@@ -104,7 +129,7 @@ namespace BmFramework.Core
         #endregion
 
         #region obj data
-        public void SetObject(string key, string _data)
+        public void SetObject(string key, object _data)
         {
             if (!objData.ContainsKey(key))
             {
@@ -145,12 +170,14 @@ namespace BmFramework.Core
         public void Dump()
         {
             if (!isDump) return;
-            string _intData = Swifter.Json.JsonFormatter.SerializeObject(intData);
-            string _boolData = Swifter.Json.JsonFormatter.SerializeObject(boolData);
-            string _stringData = Swifter.Json.JsonFormatter.SerializeObject(stringData);
+            string _intData = LitJson.JsonMapper.ToJson(intData);
+            string _boolData = LitJson.JsonMapper.ToJson(boolData);
+            string _stringData = LitJson.JsonMapper.ToJson(stringData);
+            string _floatData = LitJson.JsonMapper.ToJson(floatData);
 
             FileHandle.instance.WriteText(path + "/intData", _intData);
             FileHandle.instance.WriteText(path + "/boolData", _boolData);
+            FileHandle.instance.WriteText(path + "/floatData", _floatData);
             FileHandle.instance.WriteText(path + "/stringData", _stringData);
         }
 
@@ -161,10 +188,11 @@ namespace BmFramework.Core
             string _intData = FileHandle.instance.ReadAllString(path + "/intData");
             string _boolData = FileHandle.instance.ReadAllString(path + "/boolData");
             string _stringData = FileHandle.instance.ReadAllString(path + "/stringData");
+            string _floatData = FileHandle.instance.ReadAllString(path + "/floatData");
 
             try
             {
-                intData = Swifter.Json.JsonFormatter.DeserializeObject<Dictionary<string, int>>(_intData);                
+                intData = LitJson.JsonMapper.ToObject<Dictionary<string, int>>(_intData);
             }
             catch (System.Exception e)
             {
@@ -173,7 +201,7 @@ namespace BmFramework.Core
 
             try
             {
-                boolData = Swifter.Json.JsonFormatter.DeserializeObject<Dictionary<string, bool>>(_boolData);
+                boolData = LitJson.JsonMapper.ToObject<Dictionary<string, bool>>(_boolData);
             }
             catch (System.Exception e)
             {
@@ -182,13 +210,27 @@ namespace BmFramework.Core
 
             try
             {
-                stringData = Swifter.Json.JsonFormatter.DeserializeObject<Dictionary<string, string>>(_stringData);
+                floatData = LitJson.JsonMapper.ToObject<Dictionary<string, float>>(_floatData);
+            }
+            catch (System.Exception e)
+            {
+                floatData = new Dictionary<string, float>();
+            }
+
+            try
+            {
+                stringData = LitJson.JsonMapper.ToObject<Dictionary<string, string>>(_stringData);
             }
             catch (System.Exception e)
             {
                 stringData = new Dictionary<string, string>();
             }
-            
+
+
+            if(intData==null) intData = new Dictionary<string, int>();
+            if (boolData == null) boolData = new Dictionary<string, bool>();
+            if (stringData == null) stringData = new Dictionary<string, string>();
+            if (floatData == null) floatData = new Dictionary<string, float>();
         }
 
         private void CreateData()
@@ -196,6 +238,7 @@ namespace BmFramework.Core
             intData = new Dictionary<string, int>();
             boolData = new Dictionary<string, bool>();
             stringData = new Dictionary<string, string>();
+            floatData = new Dictionary<string, float>();
         }
     }
 }

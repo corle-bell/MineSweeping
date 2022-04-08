@@ -5,6 +5,7 @@ using UnityEditor;
 using System.Text;
 using System.IO;
 using System;
+using BmFramework.Core;
 
 namespace Bm.DefineSymbols
 {
@@ -16,23 +17,17 @@ namespace Bm.DefineSymbols
             EditorWindow.GetWindow<DefineSymbolsEditorWindow>(false, "宏定义编辑器", true).Show();
         }
 
-        public string storePath = "Assets/BmDevelop/DefineSymbolsEditor/DefineSymbolsData_{0}.asset";
+        public string storePath = "Assets/BmFramework/EditorHelper/DefineSymbolsEditor/Setting";
         public DefineSymbolsDataNode node = new DefineSymbolsDataNode();
         public DefineSymbolsData defineSymbolsData;
+        public int selectId;
+        public string assetNameAdd;
+        public string [] assetNames;
         #region Editor Fun
         private void OnEnable()
         {
-            Debug.Log("当前平台:"+EditorUserBuildSettings.selectedBuildTargetGroup);
+            Scan();
 
-            storePath = string.Format(storePath, EditorUserBuildSettings.selectedBuildTargetGroup);
-
-            defineSymbolsData = AssetDatabase.LoadAssetAtPath<DefineSymbolsData>(storePath);
-            if(defineSymbolsData==null)
-            {
-                defineSymbolsData = ScriptableObject.CreateInstance<DefineSymbolsData>();
-                AssetDatabase.CreateAsset(defineSymbolsData, storePath);
-            }
-            SysDefineCheck();
         }
 
         private void OnDisable()
@@ -40,45 +35,38 @@ namespace Bm.DefineSymbols
             EditorApplication.update -= Update;
         }
 
-
-        void SysDefineCheck()
-        {
-            string data = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
-            if (data.Length == 0) return;
-            string[] arr = data.Split(new char[] { ';'});
-
-            foreach(var item in arr)
-            {
-                if(!isExsitInList(item))
-                {
-                    var t = new DefineSymbolsDataNode();
-                    t.name = item;
-                    t.desc = "";
-                    t.status = true;
-                    defineSymbolsData.list.Add(t);
-                }
-            }
-  
-        }
-
-        bool isExsitInList(string _data)
-        {
-            foreach(var item in defineSymbolsData.list)
-            {
-                if(item.name.Equals(_data))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
+       
 
         Vector2 scroll;
         private void OnGUI()
         {
             EditorGUILayout.Space();
-            BmFramework.Core.EditorTools.DrawTitle("基本信息", new Color(0.15f, 0.15f, 0.15f));
+            EditorTools.DrawTitle("基本信息", new Color(0.15f, 0.15f, 0.15f));
+
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("扫描"))
+            {
+                Scan();
+            }
+
+            selectId = EditorGUILayout.Popup(selectId, assetNames);
+            if (GUILayout.Button("读取"))
+            {
+                Load();
+            }
+
+            assetNameAdd = EditorGUILayout.TextField("配置名称:", assetNameAdd);
+            if (GUILayout.Button("新建"))
+            {
+                Create(assetNameAdd);
+            }
+            if (GUILayout.Button("从选择文件克隆"))
+            {
+                CloneData(assetNameAdd);
+            }
+
+            EditorGUILayout.EndHorizontal();
+
 
             node.name = EditorGUILayout.TextField("宏名称:", node.name);
             node.desc = EditorGUILayout.TextField("说明:", node.desc);
@@ -104,40 +92,130 @@ namespace Bm.DefineSymbols
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.Space();
-            BmFramework.Core.EditorTools.DrawTitle("列表信息", new Color(0.15f, 0.15f, 0.15f));            
+            EditorTools.DrawTitle("列表信息", new Color(0.15f, 0.15f, 0.15f));            
             EditorGUILayout.Space();
-            scroll = EditorGUILayout.BeginScrollView(scroll);
 
-            for (int i=0; i<defineSymbolsData.list.Count; i++)
+            if(defineSymbolsData!=null)
             {
-                var item = defineSymbolsData.list[i];
-                EditorGUILayout.BeginHorizontal();
+                scroll = EditorGUILayout.BeginScrollView(scroll);
 
-                item.name = EditorGUILayout.TextField("宏名称:", item.name);
-                item.desc = EditorGUILayout.TextField("说明:", item.desc);
-                item.status = EditorGUILayout.Toggle("装填:", item.status);
-
-                if (GUILayout.Button("移除"))
+                for (int i = 0; i < defineSymbolsData.list.Count; i++)
                 {
-                    defineSymbolsData.list.RemoveAt(i);
+                    var item = defineSymbolsData.list[i];
+                    EditorGUILayout.BeginHorizontal();
+
+#if UNITY_2019_4_OR_NEWER
+                    item.name = EditorGUILayout.TextField("宏名称:", item.name, GUI.skin.customStyles[525]);
+                    item.desc = EditorGUILayout.TextField("说明:", item.desc, GUI.skin.customStyles[525]);
+#else
+item.name = EditorGUILayout.TextField("宏名称:", item.name, GUI.skin.customStyles[532]);
+                    item.desc = EditorGUILayout.TextField("说明:", item.desc, GUI.skin.customStyles[532]);
+#endif
+                    item.status = EditorGUILayout.Toggle("状态:", item.status);
+
+                    if (GUILayout.Button("移除"))
+                    {
+                        defineSymbolsData.list.RemoveAt(i);
+                    }
+
+                    EditorGUILayout.EndHorizontal();
                 }
 
-                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndScrollView();
+
+                if (GUI.changed)
+                {
+                    EditorUtility.SetDirty(defineSymbolsData);
+                }
             }
 
-            EditorGUILayout.EndScrollView();
+            
+        }
+#endregion
 
-            if(GUI.changed)
+#region draw fun
+#endregion
+
+#region private fun
+        private void Create(string _name)
+        {
+            defineSymbolsData = ScriptableObject.CreateInstance<DefineSymbolsData>();
+            AssetDatabase.CreateAsset(defineSymbolsData, GetAssetPath(_name));
+
+            System.Array.Resize(ref assetNames, assetNames.Length + 1);
+            selectId = assetNames.Length - 1;
+            assetNames[selectId] = _name;
+        }
+        private void CloneData(string _name)
+        {
+            if(defineSymbolsData==null)
             {
-                EditorUtility.SetDirty(defineSymbolsData);
+                Load();
+            }
+            defineSymbolsData = ScriptableObject.Instantiate(defineSymbolsData);
+            AssetDatabase.CreateAsset(defineSymbolsData, GetAssetPath(_name));
+
+            System.Array.Resize(ref assetNames, assetNames.Length + 1);
+            selectId = assetNames.Length - 1;
+            assetNames[selectId] = _name;
+        }
+        void Scan()
+        {
+            string[] resFiles = AssetDatabase.FindAssets("t:DefineSymbolsData", new string[] { storePath });
+            if (resFiles != null)
+            {
+                assetNames = new string[resFiles.Length];
+                for (int i = 0; i < resFiles.Length; i++)
+                {
+                    string assetName = AssetDatabase.GUIDToAssetPath(resFiles[i]); ;
+                    string[] sarr = assetName.Split(new char[] { '/' });
+                    assetNames[i] = sarr[sarr.Length - 1].Replace(".asset", "");
+                }
             }
         }
-        #endregion
 
-        #region draw fun
-        #endregion
+        string GetAssetPath(string _name)
+        {
+            return string.Format("{0}/{1}.asset", storePath, _name);
+        }
 
-        #region private fun
+        void Load()
+        {
+            defineSymbolsData = AssetDatabase.LoadAssetAtPath<DefineSymbolsData>(GetAssetPath(assetNames[selectId]));
+            SysDefineCheck();
+        }
+
+        void SysDefineCheck()
+        {
+            string data = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+            if (data.Length == 0) return;
+            string[] arr = data.Split(new char[] { ';' });
+
+            foreach (var item in arr)
+            {
+                if (!isExsitInList(item))
+                {
+                    var t = new DefineSymbolsDataNode();
+                    t.name = item;
+                    t.desc = "";
+                    t.status = true;
+                    defineSymbolsData.list.Add(t);
+                }
+            }
+
+        }
+
+        bool isExsitInList(string _data)
+        {
+            foreach (var item in defineSymbolsData.list)
+            {
+                if (item.name.Equals(_data))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         private void WriteToEditor()
         {
             EditorUtility.DisplayCancelableProgressBar("提示", "正在写入编辑器~", 0.9f);
@@ -187,10 +265,10 @@ namespace Bm.DefineSymbols
         {
             Debug.Log("EnumEditor: "+ _string);
         }
-        #endregion
+#endregion
 
-        #region public fun
-        #endregion
+#region public fun
+#endregion
 
     }
 }

@@ -11,7 +11,7 @@ namespace Bm.Sdk.Helper
         public abstract void OnApplication(bool isPause);
 
         public abstract void OnEvent(string _event, string _flag, string _params);
-
+        public abstract void OnEvent(string _event, Dictionary<string, object> _params);
         public abstract void OnLevelBegin(string _levelName);
 
         public abstract void OnLevelComplete(string _levelName);
@@ -19,6 +19,8 @@ namespace Bm.Sdk.Helper
         public abstract void OnLevelFail(string _levelName, string _reason);
 
         public abstract void PlayLevel(int _level);
+
+        public abstract void OnAdEvent(AdType adType, AdStatus _status, string _place, string _sdk, string _info=null);
     }
 
     public class AnalysisHelper : SdkBaseHelper
@@ -36,7 +38,24 @@ namespace Bm.Sdk.Helper
             analyses.Add(new AnalysisHelper_Crazylab());
 #endif
 
+#if SDK_Voodoo
+            analyses.Add(new AnalysisHelper_Voodoo());
+#endif
 
+#if SDK_GA
+            analyses.Add(new AnalysisHelper_GameAnalytics());
+#endif
+#if SDK_Tenjin
+            analyses.Add(new AnalysisHelper_Tenjin());
+#endif
+
+#if SDK_TalkingData
+            analyses.Add(new AnalysisHelper_TalkingData());
+#endif
+
+#if UNITY_EDITOR
+            analyses.Add(new AnalysisHelper_Editor());
+#endif
 
 
             foreach (var item in analyses)
@@ -47,50 +66,111 @@ namespace Bm.Sdk.Helper
 
         public override void OnApplication(bool isPause)
         {
-            foreach (var item in analyses)
+            try
             {
-                item.OnApplication(isPause);
+                foreach (var item in analyses)
+                {
+                    item.OnApplication(isPause);
+                }
             }
+            catch (System.Exception e)
+            {
+
+            }
+            
         }
 
         public void OnEvent(string _event, string _flag, string _params)
         {
-            foreach (var item in analyses)
+            try
             {
-                item.OnEvent(_event, _flag, _params);
+                foreach (var item in analyses)
+                {
+                    item.OnEvent(_event, _flag, _params);
+                }
+            }
+            catch (System.Exception e)
+            {
+
             }
         }
 
         public void OnLevelBegin(string _levelName)
         {
-            foreach (var item in analyses)
+            try
             {
-                item.OnLevelBegin(_levelName);
+                foreach (var item in analyses)
+                {
+                    item.OnLevelBegin(_levelName);
+                }
             }
+            catch (System.Exception e)
+            {
+
+            }
+            
         }
 
         public void OnLevelComplete(string _levelName)
         {
-            foreach (var item in analyses)
+            try
             {
-                item.OnLevelComplete(_levelName);
+                foreach (var item in analyses)
+                {
+                    item.OnLevelComplete(_levelName);
+                }
             }
+            catch (System.Exception e)
+            {
+
+            }
+            
         }
 
         public void OnLevelFail(string _levelName, string _reason)
         {
-            foreach (var item in analyses)
+            try
             {
-                item.OnLevelFail(_levelName, _reason);
+                foreach (var item in analyses)
+                {
+                    item.OnLevelFail(_levelName, _reason);
+                }
+            }
+            catch (System.Exception e)
+            {
+
             }
         }
 
         public void PlayLevel(int _level)
         {
-            foreach (var item in analyses)
+            try
             {
-                item.PlayLevel(_level);
+                foreach (var item in analyses)
+                {
+                    item.PlayLevel(_level);
+                }
+            }
+            catch (System.Exception e)
+            {
+
             }
         }
+
+        public void OnAdEvent(AdType adType, AdStatus _status, string _place, string _sdk, string _info=null)
+        {
+            try
+            {
+                foreach (var item in analyses)
+                {
+                    item.OnAdEvent(adType, _status, _place, _sdk, _info);
+                }
+            }
+            catch (System.Exception e)
+            {
+
+            }
+        }
+
     }
 }

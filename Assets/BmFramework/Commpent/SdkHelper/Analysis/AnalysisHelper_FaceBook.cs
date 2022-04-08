@@ -66,6 +66,15 @@ namespace Bm.Sdk.Helper
             );
         }
 
+        public override void OnEvent(string _event, Dictionary<string, object> _params)
+        {
+            FB.LogAppEvent(
+                _event,
+                1,
+                _params
+            );
+        }
+
         public override void OnLevelBegin(string _levelName)
         {
             var parameters = new Dictionary<string, object>();
@@ -113,6 +122,11 @@ namespace Bm.Sdk.Helper
                 parameters
             );
         }
+        public override void OnAdEvent(AdType adType, AdStatus _status, string _place, string _sdk, string _info)
+        {
+
+        }
+
     }
 }
 

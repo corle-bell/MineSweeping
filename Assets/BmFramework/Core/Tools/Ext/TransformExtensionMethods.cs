@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public static class TransformExtensionMethods
 {
 	public static void SetPositionX(this Transform transform, float x)
@@ -165,6 +165,22 @@ public static class TransformExtensionMethods
 		return Vector3.Distance(left, right);
 	}
 
+	public static float DistanceTo_XZ(this Transform transform, Vector3 position)
+	{
+		var left = transform.position;
+		var right = position;
+		left.y = right.y = 0;
+		return Vector3.Distance(left, right);
+	}
+
+	public static float LocalDistanceTo_XZ(this Transform transform, Vector3 position)
+	{
+		var left = transform.localPosition;
+		var right = position;
+		left.y = right.y = 0;
+		return Vector3.Distance(left, right);
+	}
+
 	public static float SqrDistanceTo(this Transform transform, Transform target)
 	{
 		return Vector3.SqrMagnitude(transform.position - target.position);
@@ -198,7 +214,19 @@ public static class TransformExtensionMethods
     {
 		var tmp = transform.forward;
 		var target = _dest;
-		return DG.Tweening.DOTween.To(() => 0, x => transform.forward = Vector3.Lerp(tmp, target, x), 1.0f, _time);
+		return DG.Tweening.DOTween.To(() => 0, x => transform.forward = Vector3.Slerp(tmp, target, x), 1.0f, _time);
+	}
+
+	public static DG.Tweening.Tween DOMoveBySpeed(this Transform transform, Vector3 _dest, float _speed)
+	{
+		float time = Vector3.Distance(transform.position, _dest)/ _speed;
+		return transform.DOMove(_dest, time);
+	}
+
+	public static DG.Tweening.Tween DOLocalMoveBySpeed(this Transform transform, Vector3 _dest, float _speed)
+	{
+		float time = Vector3.Distance(transform.localPosition, _dest) / _speed;
+		return transform.DOLocalMove(_dest, time);
 	}
 
 	public static string HierarchyName(this Transform transform)

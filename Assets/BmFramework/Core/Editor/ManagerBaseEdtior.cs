@@ -18,11 +18,13 @@ namespace BmFramework.Core
 
         List<string> btnName = new List<string>();
         List<System.Action<int>> btnFuns = new List<System.Action<int>>();
+        List<int> btnFlags = new List<int>();
 
-        protected void AddButton(string _name, System.Action<int> _action)
+        protected void AddButton(string _name, System.Action<int> _action, int _flag=0)
         {
             btnName.Add(_name);
             btnFuns.Add(_action);
+            btnFlags.Add(_flag);
         }
 
         protected void ClearButton()

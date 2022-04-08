@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BmFramework.Core
 {
@@ -10,6 +11,7 @@ namespace BmFramework.Core
         [EnumName("开局自动隐藏")]
         public bool autoHide;
 
+        public UnityEvent showEvent;
         // Start is called before the first frame update
         void Start()
         {
@@ -38,6 +40,7 @@ namespace BmFramework.Core
             if (name == _event.Cmd)
             {
                 gameObject.SetActive(true);
+                showEvent?.Invoke();
             }
         }
     }

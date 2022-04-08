@@ -16,6 +16,11 @@ namespace BmFramework.Core
             return  string.Format("Ref Count:{0}  Queue Count:{1}", RefUseCount, refQueue.Count);
         }
 
+        public int GetRefCount()
+        {
+            return refQueue.Count;
+        }
+
         public RefPool(int _max)
         {
             MaxCount = _max;

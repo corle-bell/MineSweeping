@@ -15,6 +15,7 @@ namespace BmFramework.Core
 
         internal override void OnUpdate(float deltaTime)
         {
+            poolManager.UsingLogic(deltaTime);
         }
 
         internal override void OnDestory()

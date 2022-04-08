@@ -16,6 +16,8 @@ namespace BmFramework.Core
             uIAnimationRes.Open();
         }
 
+     
+
         public virtual void OnOpenAnimation()
         {
             //on open animtion start

@@ -48,21 +48,15 @@ namespace Bm.Lerp
 
             Handles.color = Color.red;
 
-            for (int i=1; i<100; i++)
-            {
-                float t = i;
-                var pos = MathTools.GetSplinePoint(script.points, (t-1) /100);
-                var pos1 = MathTools.GetSplinePoint(script.points, t/ 100);
-                Handles.DrawLine(pos, pos1);
-            }
+            
 
             if (!isEdit) return;
 
             Handles.BeginGUI();
             for(int i=1; i<script.points.Count-1; i++)
             {
-                Handles.Label(script.points[i] + new Vector3(0, 1, 0), "Point_"+(i - 1), GUI.skin.customStyles[564]);
-                script.points[i] = Handles.PositionHandle(script.points[i], Quaternion.identity);
+                script.transform.Handles_Label(script.points[i] + new Vector3(0, 1, 0), "Point_" + (i - 1), GUI.skin.customStyles[564]);                
+                script.points[i] = script.transform.Handles_Position(script.points[i], Quaternion.identity);
             }
             Handles.EndGUI();
 
@@ -73,7 +67,7 @@ namespace Bm.Lerp
         {
             var script = target as BmLerpSpline;
             int id = 0;
-            script.points[id] = script.points[id+1];
+            //script.points[id] = script.points[id+1];
 
             id = script.points.Count - 1;
             script.points[id] = script.points[id-1];
