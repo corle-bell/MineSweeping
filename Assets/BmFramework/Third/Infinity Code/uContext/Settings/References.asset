@@ -142,8 +142,18 @@ MonoBehaviour:
     useCustomWindowSize: 0
     customWindowSize: {x: 400, y: 300}
   _sceneHistory:
+  - name: CellAutoMap
+    path: Assets/Game/Scenes/LifeGame/CellAutoMap.unity
+  - name: LifeGame
+    path: Assets/Game/Scenes/LifeGame/LifeGame.unity
+  - name: Snake
+    path: Assets/Game/Scenes/Snake/Snake.unity
+  - name: Game
+    path: Assets/Game/Scenes/MineSweeping/Game.unity
   - name: DrawLineSample
     path: Assets/Game/Scenes/DrawLine3D/DrawLineSample.unity
+  - name: DrawLineSample2D
+    path: Assets/Game/Scenes/DrawLine3D/DrawLineSample2D.unity
   - name: Main
     path: Assets/Game/Scenes/Main.unity
   - name: Game

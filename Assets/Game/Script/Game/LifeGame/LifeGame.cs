@@ -11,7 +11,8 @@ public class LifeGame : MonoBehaviour
     int[] neighborLine;
     int[] randomData;
     public int status = 0;
-
+    [Range(10, 30)]
+    public int randomParams;
     public float updateTime = 0.1f;
     float tick = 0;
     // Start is called before the first frame update
@@ -28,7 +29,7 @@ public class LifeGame : MonoBehaviour
     {
         randomData.FillByIndex();
 
-        int randomNumber = row*10;
+        int randomNumber = row* randomParams;
         int len = randomData.Length;
         for (int i = 0; i< randomNumber; i++)
         {

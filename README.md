@@ -26,3 +26,12 @@ DrawPhycisLine
 # 截图
 ![Image text](https://github.com/corle-bell/MineSweeping/blob/main/Screenshoot/life_game.png)
 
+# 细胞演化生成地形图
+
+修改下生命游戏的规则。(周围存在4个活着的单位则生, 小于4个则亡, 等于4个不做改变)
+在给予随机的初始化格子后。(随机数和柏林噪声)
+根据细胞演化生成地形图。
+
+# 截图
+![Image text](https://github.com/corle-bell/MineSweeping/blob/main/Screenshoot/map.gif)
+
