@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ItemEventTrigger2D : MonoBehaviour
+public class ItemEventTrigger : MonoBehaviour
 {
     public string tagFilter = "";
     public UnityEvent[] eventArr;
 
     public bool isOnce;
     public bool isHideAfterTrigger;
-    Collider2D collider;
+    Collider collider;
     private void Awake()
     {
-        collider = GetComponent<Collider2D>();
+        collider = GetComponent<Collider>();
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
         if (eventArr == null || (!string.IsNullOrEmpty(tagFilter) && !other.CompareTag(tagFilter))) return;
         foreach(var item in eventArr)

@@ -22,6 +22,8 @@ public class CellAutoMap : MonoBehaviour
     public float space = 5f;
     public float tile_size = 25;
 
+    public int loopCount;
+
     private LifeNode first;
     private int leftCount;
     private int startIndex;
@@ -99,7 +101,7 @@ public class CellAutoMap : MonoBehaviour
             int x = i % row;
             int y = i / row;
 
-            float v =  Mathf.PerlinNoise(((float)x)/row*(FrameworkTools.Ranomd(10, 15f)), ((float)y) / row * (FrameworkTools.Ranomd(10, 15f)));
+            float v =  Mathf.PerlinNoise(((float)x)/row*(FrameworkTools.Ranomd(20, 25f)), ((float)y) / row * (FrameworkTools.Ranomd(20, 25f)));
             nodes[i].SetState(v>= perlinParams ? 1 : 0); //噪声图分界
 
             nodes[i].Record();
@@ -128,6 +130,7 @@ public class CellAutoMap : MonoBehaviour
         {
             nodes[i].Record();
         }
+        loopCount++;
     }
 
     // Update is called once per frame
@@ -184,6 +187,10 @@ public class CellAutoMap : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                if(status==0)
+                {
+                    loopCount = 0;
+                }
                 status = status == 1 ? 0 : 1;
                 tick = 0;
             }

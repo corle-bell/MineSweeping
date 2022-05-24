@@ -253,10 +253,11 @@ MonoBehaviour:
   row: 80
   status: 0
   randomParams: 45
-  updateTime: 0.05
+  updateTime: 0.01
   perlinParams: 0.43
   space: 1
   tile_size: 14
+  loopCount: 0
 --- !u!222 &353709531
 CanvasRenderer:
   m_ObjectHideFlags: 0

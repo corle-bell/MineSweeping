@@ -12,15 +12,19 @@ using BmFramework.Core;
 
 public class GameController_DrawLine : MonoBehaviour
 {
-    public DrawManager drawManager;
+    public GameObject drawManager;
     public GameObject ballContainer;
     public GameObject gameWin;
+
     private Rigidbody[] balls;
+    private Rigidbody2D[] balls2D;
     int ballNumber;
+    int ballCount;
     // Start is called before the first frame update
     void Start()
     {
         balls = ballContainer.GetComponentsInChildren<Rigidbody>();
+        balls2D = ballContainer.GetComponentsInChildren<Rigidbody2D>();
     }
 
     public void OnStart()
@@ -29,11 +33,18 @@ public class GameController_DrawLine : MonoBehaviour
         {
             i.isKinematic = false;
         }
+
+        foreach (var i in balls2D)
+        {
+            i.isKinematic = false;
+        }
+
+        ballCount = balls.Length + balls2D.Length;
     }
 
     public void OnClear()
     {
-        drawManager.ClearAllLines();
+        drawManager.SendMessage("ClearAllLines");
     }
 
     public void OnReload()
@@ -45,7 +56,7 @@ public class GameController_DrawLine : MonoBehaviour
     public void OnEnding()
     {
         ballNumber++;
-        if(ballNumber>=balls.Length)
+        if(ballNumber>= ballCount)
         {
             gameWin.SetActive(true);
         }        
