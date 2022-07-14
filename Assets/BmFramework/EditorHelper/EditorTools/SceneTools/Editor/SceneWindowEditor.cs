@@ -61,8 +61,6 @@ namespace Bm.EditorTool.Scene
 				setting = ScriptableObject.CreateInstance<SceneToolsSetting>();
 				AssetDatabase.CreateAsset(setting, settgingPath);
 			}
-
-			setting.scanPath = EditorPrefs.GetString(PlayerSettings.productName + "SceneWindowEditor_Path", setting.scanPath);
 			Scan();
 		}
 
@@ -94,12 +92,18 @@ namespace Bm.EditorTool.Scene
 
 		void Scan()
 		{
-			string fullPath = setting.scanPath;  //路径
+			var PathArray = setting.scanPath;  //路径
 
 			string current = EditorPrefs.GetString("SceneManager_Launch", "");
 			string lastScenestr = EditorPrefs.GetString("SceneManager_Last", "");
 
-			CheckFolder(fullPath, current, lastScenestr);
+			setting.sceneNodes.Clear();
+
+			foreach(string fullPath in PathArray)
+            {
+				CheckFolder(fullPath, current, lastScenestr);
+			}
+			
 
 			setting.sceneNodes.Sort((left, right) =>
 				{
@@ -146,10 +150,6 @@ namespace Bm.EditorTool.Scene
 					{
 						lastScene = tt;
 					}
-				}
-				if(resFiles.Length==0)
-                {
-					setting.sceneNodes.Clear();
 				}
 			}
 
@@ -249,14 +249,26 @@ namespace Bm.EditorTool.Scene
 			}
 			EditorGUILayout.EndHorizontal();
 
-			EditorGUILayout.BeginHorizontal();
-			setting.scanPath = EditorGUILayout.TextField("路径:", setting.scanPath);
-			if (GUILayout.Button("保存"))
-			{
-				EditorPrefs.SetString(PlayerSettings.productName + "SceneWindowEditor_Path", setting.scanPath);
-			}
+			EditorGUILayout.HelpBox("扫描路径配置", MessageType.Info);
 			
-			EditorGUILayout.EndHorizontal();
+			for(int i=0; i<setting.scanPath.Count; i++)
+            {
+				EditorGUILayout.BeginHorizontal();
+				setting.scanPath[i] = EditorGUILayout.TextField("路径:", setting.scanPath[i]);
+				if (GUILayout.Button("删除"))
+				{
+					setting.scanPath.Remove(setting.scanPath[i]);
+				}
+				EditorGUILayout.EndHorizontal();
+			}
+			if (GUILayout.Button("添加"))
+			{
+				var path = EditorUtility.OpenFolderPanel("选择路径", Application.dataPath, "");
+				path = path.Replace(Application.dataPath, "Assets");
+				setting.scanPath.Add(path);
+			}
+
+			
 
 			EditorGUILayout.HelpBox("选项", MessageType.Info);
 			GUILayout.Space(5);

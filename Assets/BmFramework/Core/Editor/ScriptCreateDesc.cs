@@ -4,17 +4,23 @@ using System.IO;
 using System;
 using UnityEditor;
 
-public class ScriptCreateDesc : UnityEditor.AssetModificationProcessor
+namespace BmFramework.Core
 {
-    private static void OnWillCreateAsset(string path)
+    public class ScriptCreateDesc : UnityEditor.AssetModificationProcessor
     {
-        path = path.Replace(".meta", "");
-        if (path.EndsWith(".cs"))
+        private static void OnWillCreateAsset(string path)
         {
-            string strContent = File.ReadAllText(path);
-            strContent = strContent.Replace("#AuthorName#", "Cyy").Replace("#CreateDate#", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-            File.WriteAllText(path, strContent);
-            AssetDatabase.Refresh();
+            path = path.Replace(".meta", "");
+            if (path.EndsWith(".cs"))
+            {
+                string fileName = FileHandle.instance.GetFileName(path, ".cs");
+                string strContent = EditorHelper.script_init;
+                strContent = strContent.Replace("#AuthorName#", "Cyy").Replace("#CreateDate#", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                strContent = strContent.Replace("#SCRIPTNAME#", fileName).Replace("#NOTRIM#", "//code here");
+
+                File.WriteAllText(path, strContent);
+                AssetDatabase.Refresh();
+            }
         }
     }
 }

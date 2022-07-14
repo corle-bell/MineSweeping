@@ -58,6 +58,9 @@ namespace Bm.Lerp
                 case BmLerpTransformType.AnchoredPosition:
                     RecordOne(ref _data.moveData, (_data.transform as RectTransform).anchoredPosition, end);
                     break;
+                case BmLerpTransformType.SizeDelta:
+                    RecordOne(ref _data.sizeData, (_data.transform as RectTransform).sizeDelta, end);
+                    break;
                 case BmLerpTransformType.Rotation:
                     RecordOne(ref _data.rotationData, _data.transform.rotation, end);
                     break;
@@ -81,6 +84,7 @@ namespace Bm.Lerp
             RecordOne(ref _data.moveData, (_data.transform as RectTransform).anchoredPosition, _isEnd);
             RecordOne(ref _data.rotationData, isLocal ? _data.transform.localRotation :_data.transform.rotation, _isEnd);
             RecordOne(ref _data.scaleData, _data.transform.localScale, _isEnd);
+            RecordOne(ref _data.sizeData, (_data.transform as RectTransform).sizeDelta, _isEnd);
         }
 
 

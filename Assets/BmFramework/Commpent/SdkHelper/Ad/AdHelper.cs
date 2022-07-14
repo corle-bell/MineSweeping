@@ -9,12 +9,15 @@ namespace Bm.Sdk.Helper
         IAdHelperCallback adHelperCallback { get; set; }
 
         void Init();
+        void BeginLoad();
         bool IsRewardReady();
         bool IsInterstitialReady();
         void ShowBanner();
         void HideBanner();
         void ShowInterstitial();
         void ShowRewardVideo();
+
+        void SetGDPRFlag(bool isConsent);
 
         string GetSdkName(AdType adType);
     }
@@ -54,13 +57,13 @@ namespace Bm.Sdk.Helper
 
         public override void Init()
         {
-            #if AD_MAX
-                adHelper = SdkHelper.instance.gameObject.AddComponent<AdHelper_Max>();
-                adHelper.Init();
-                adHelper.adHelperCallback = this;
-            #endif
+#if AD_MAX
+            adHelper = SdkHelper.instance.gameObject.AddComponent<AdHelper_Max>();
+            adHelper.Init();
+            adHelper.adHelperCallback = this;
+#endif
 
-            if (adHelper==null)
+            if (adHelper == null)
             {
                 adHelper = new AdHelper_Empty();
                 adHelper.Init();
@@ -71,6 +74,11 @@ namespace Bm.Sdk.Helper
         public override void OnApplication(bool isPause)
         {
 
+        }
+
+        public void BeginLoad()
+        {
+            adHelper.BeginLoad();
         }
 
         public bool IsRewardReady()
@@ -95,7 +103,7 @@ namespace Bm.Sdk.Helper
 
         public void ShowInterstitial(UnityAction<AdType, AdStatus> callback)
         {
-            if(IsInterstitialReady())
+            if (IsInterstitialReady())
             {
                 InterstitialCallback = callback;
                 adHelper.ShowInterstitial();
@@ -108,7 +116,7 @@ namespace Bm.Sdk.Helper
             adHelper.ShowRewardVideo();
         }
 
-#region IAdHelperCallback
+        #region IAdHelperCallback
         public void RewardedVideo(AdType type, AdStatus status)
         {
             RewardCallback?.Invoke(type, status);
@@ -116,18 +124,25 @@ namespace Bm.Sdk.Helper
 
         public void Interstitial(AdType type, AdStatus status)
         {
-            InterstitialCallback?.Invoke(type, status); 
+            InterstitialCallback?.Invoke(type, status);
         }
 
         public void Banner(AdType type, AdStatus status)
         {
-            
+
         }
 
         public string GetSdkName(AdType adType)
         {
             return adHelper.GetSdkName(adType);
         }
-#endregion
+        #endregion
+
+        #region GPDR
+        public void SetGPDRFlag(bool isConsent)
+        {
+
+        }
+        #endregion
     }
 }

@@ -1,0 +1,22 @@
+//*************************************************
+//----Author:       #AuthorName# 
+//
+//----CreateDate:   #CreateDate#
+//
+//----Desc:         Create By BM
+//
+//**************************************************
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using BmFramework.Core;
+
+public class #SCRIPTNAME# : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        #NOTRIM#
+    }
+}

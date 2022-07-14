@@ -19,9 +19,14 @@ public static class UICommpentExtensionMethodes
         render.color = t;
     }
 
-    public static void FadeTo(this Graphic graphic, float a, float _time)
+    public static DG.Tweening.Tweener FadeTo(this Graphic graphic, float a, float _time)
     {
         Color t = graphic.color;
-        DG.Tweening.DOTween.To(() => t.a, x => SetAlpha(graphic, x), a, _time);
+        return DG.Tweening.DOTween.To(() => t.a, x => SetAlpha(graphic, x), a, _time);
+    }
+
+    public static void ColorFitler(this Graphic graphic, float fitler)
+    {
+        graphic.materialForRendering.SetFloat("_Filter", fitler);
     }
 }

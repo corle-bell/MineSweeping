@@ -24,6 +24,8 @@ namespace Bm.Helper.Build
         ScriptingImplementation buildType;
         UIOrientation uIOrientation;
         Texture2D icon;
+        Texture2D iconFront;
+        Texture2D iconBack;
         bool isEdit;
 
 
@@ -55,6 +57,8 @@ namespace Bm.Helper.Build
                 uIOrientation = (UIOrientation)EditorGUILayout.EnumPopup("默认屏幕方向:", uIOrientation);
                 buildType = (ScriptingImplementation)EditorGUILayout.EnumPopup("编译模式:", buildType);                                
                 icon = (Texture2D)EditorGUILayout.ObjectField("图标", icon, typeof(Texture2D));
+                iconFront = (Texture2D)EditorGUILayout.ObjectField("Addtive_前景图标", iconFront, typeof(Texture2D));
+                iconBack = (Texture2D)EditorGUILayout.ObjectField("Addtive_背景图标", iconBack, typeof(Texture2D));
                 isAutoGraphics = EditorGUILayout.Toggle("AutoGraphics", isAutoGraphics);
 
 
@@ -118,7 +122,28 @@ namespace Bm.Helper.Build
             Texture2D[] tmp = PlayerSettings.GetIconsForTargetGroup(BuildTargetGroup.Android, IconKind.Settings);
             icon = tmp[0];
 
-            
+            icon = GetAndroidIcon(UnityEditor.Android.AndroidPlatformIconKind.Legacy);
+            iconBack = GetAndroidIcon(UnityEditor.Android.AndroidPlatformIconKind.Adaptive, 0);
+            iconFront = GetAndroidIcon(UnityEditor.Android.AndroidPlatformIconKind.Adaptive, 1);
+        }
+
+        private Texture2D GetAndroidIcon(PlatformIconKind kind, int layer=0)
+        {
+            var platform = BuildTargetGroup.Android;
+            var icons = PlayerSettings.GetPlatformIcons(platform, kind);
+            return icons[0].GetTexture(layer);
+        }
+
+        private void SetAndroidIcon(PlatformIconKind kind, Texture2D icon, int layer = 0)
+        {
+            var platform = BuildTargetGroup.Android;
+            var icons = PlayerSettings.GetPlatformIcons(platform, kind);
+            foreach(var i in icons)
+            {
+                i.SetTexture(icon, layer);
+            }
+
+            PlayerSettings.SetPlatformIcons(platform, kind, icons);
         }
 
         private void SaveConfig()
@@ -144,22 +169,12 @@ namespace Bm.Helper.Build
                 
             }
 
-            _setDefaultIcon(icon);
+            SetAndroidIcon(UnityEditor.Android.AndroidPlatformIconKind.Legacy, icon);
+            SetAndroidIcon(UnityEditor.Android.AndroidPlatformIconKind.Adaptive, iconBack, 0);
+            SetAndroidIcon(UnityEditor.Android.AndroidPlatformIconKind.Adaptive, iconFront, 1);
         }
 
-        private void _setDefaultIcon(Texture2D texture)
-        {
-            int[] iconSize = PlayerSettings.GetIconSizesForTargetGroup(BuildTargetGroup.Android);
-            Texture2D[] textureArray = new Texture2D[iconSize.Length];
-            for (int i = 0; i < textureArray.Length; i++)
-            {
-                textureArray[i] = texture;
-            }
-            textureArray[0] = texture;
-            PlayerSettings.SetIconsForTargetGroup(BuildTargetGroup.Android, textureArray);
-
-            AssetDatabase.SaveAssets();
-        }
+      
 
         [PostProcessBuild(1)]
         public static void AfterBuild(BuildTarget target, string pathToBuiltProject)

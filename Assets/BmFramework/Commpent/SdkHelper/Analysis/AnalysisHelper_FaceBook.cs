@@ -127,6 +127,11 @@ namespace Bm.Sdk.Helper
 
         }
 
+        public override void OnGDPRSet(bool isAgree)
+        {
+
+        }
+
     }
 }
 

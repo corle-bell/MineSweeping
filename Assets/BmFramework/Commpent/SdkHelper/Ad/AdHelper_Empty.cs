@@ -14,6 +14,16 @@ namespace Bm.Sdk.Helper
 
         }
 
+        public void BeginLoad()
+        {
+           
+        }
+
+        public void SetGDPRFlag(bool isConsent)
+        {
+
+        }
+
         public bool IsRewardReady()
         {
             return true;

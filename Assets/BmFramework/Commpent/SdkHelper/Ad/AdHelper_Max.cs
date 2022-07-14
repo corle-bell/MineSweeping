@@ -28,7 +28,31 @@ namespace Bm.Sdk.Helper
 
         private string interstitialSdk;
         private string rewardSdk;
+        private bool isBeginLoad=false;
+
 #region IAdCommpent
+
+        public void BeginLoad()
+        {
+            isBeginLoad = true;
+
+            Log("BeginLoad");
+
+            // Load the first interstitial
+            LoadInterstitial();
+            // Load the first RewardedAd
+            LoadRewardedAd();
+
+            if(isBannerShow)
+            {
+                MaxSdk.ShowBanner(BannerAdUnitId);
+            }
+        }
+
+        public void SetGDPRFlag(bool isConsent)
+        {
+            MaxSdk.SetHasUserConsent(isConsent);
+        }
         public void Init()
         {
             Log("MaxSdkHelper Init");
@@ -45,12 +69,30 @@ namespace Bm.Sdk.Helper
                 InitializeRewardedAds();
                 InitializeBannerAds();
                 //InitializeMRecAds();
+
+
+                if (sdkConfiguration.ConsentDialogState == MaxSdkBase.ConsentDialogState.Applies)
+                {
+                    // Show user consent dialog
+                    SDKGlobalData.Instance.OnCheck();
+                }
+                else if (sdkConfiguration.ConsentDialogState == MaxSdkBase.ConsentDialogState.DoesNotApply)
+                {
+                    // No need to show consent dialog, proceed with initialization
+                    BeginLoad();
+                }
+                else
+                {
+                    // Consent dialog state is unknown. Proceed with initialization, but check if the consent
+                    // dialog should be shown on the next application initialization
+
+                    BeginLoad();
+                    //SDKGlobalData.Instance.OnCheck();
+                }
             };
 
             MaxSdk.SetSdkKey(MaxSdkKey);
             MaxSdk.InitializeSdk();
-
-            
         }
 
         public bool IsRewardReady()
@@ -67,6 +109,8 @@ namespace Bm.Sdk.Helper
         {
             if (isBannerShow) return;
             isBannerShow = true;
+
+            if(isBeginLoad)
             MaxSdk.ShowBanner(BannerAdUnitId);
         }
         public void HideBanner()
@@ -127,8 +171,7 @@ namespace Bm.Sdk.Helper
             MaxSdkCallbacks.Interstitial.OnAdDisplayedEvent += InterstitialDisplayEvent;
             MaxSdkCallbacks.Interstitial.OnAdHiddenEvent += OnInterstitialDismissedEvent;
 
-            // Load the first interstitial
-            LoadInterstitial();
+            
         }
 
         void LoadInterstitial()
@@ -208,8 +251,7 @@ namespace Bm.Sdk.Helper
             MaxSdkCallbacks.Rewarded.OnAdReceivedRewardEvent += OnRewardedAdReceivedRewardEvent;
 
 
-            // Load the first RewardedAd
-            LoadRewardedAd();
+           
         }
 
         private void LoadRewardedAd()
@@ -290,9 +332,11 @@ namespace Bm.Sdk.Helper
         private void OnReward()
         {
             callTimes++;
-            if(callTimes>=2)
+            if(callTimes==2)
             {
                 adHelperCallback.RewardedVideo(AdType.RewardVideo, AdStatus.Reward);
+
+                callTimes = -999;
             }
         }
 
@@ -307,7 +351,7 @@ namespace Bm.Sdk.Helper
             MaxSdk.CreateBanner(BannerAdUnitId, MaxSdkBase.BannerPosition.BottomCenter);
 
             // Set background or background color for banners to be fully functional.
-            MaxSdk.SetBannerBackgroundColor(BannerAdUnitId, Color.white);
+            MaxSdk.SetBannerBackgroundColor(BannerAdUnitId, Color.clear);
         }
 
  
@@ -339,14 +383,7 @@ namespace Bm.Sdk.Helper
 #endregion
 
 
-        int touchTimes = 0;
-        private void Update()
-        {
-            if(Input.touchCount>3)
-            {
-
-            }
-        }
+       
     }
 }
 #endif

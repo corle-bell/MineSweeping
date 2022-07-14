@@ -28,7 +28,7 @@ MonoBehaviour:
   - status: 1
     name: ODIN_INSPECTOR_3
     desc: 
-  - status: 1
+  - status: 0
     name: VS_ATT
     desc: 
   - status: 1
@@ -37,22 +37,22 @@ MonoBehaviour:
   - status: 1
     name: SDK_TalkingData
     desc: "talkingdata\u7EDF\u8BA1"
-  - status: 1
+  - status: 0
     name: SDK_GA
     desc: "GA\u7EDF\u8BA1"
   - status: 0
     name: SDK_Tenjin
     desc: "Tenjin\u5F52\u56E0\u7EDF\u8BA1"
-  - status: 1
+  - status: 0
     name: gameanalytics_max_enabled
     desc: 
-  - status: 1
+  - status: 0
     name: AD_MAX
     desc: "Max\u5E7F\u544ASDK"
   - status: 1
     name: GPU_INSTANCER
     desc: 
-  - status: 1
+  - status: 0
     name: AMPLIFY_SHADER_EDITOR
     desc: 
   - status: 1
@@ -70,3 +70,21 @@ MonoBehaviour:
   - status: 1
     name: TD_GAME
     desc: "TalkingData\u6E38\u620F\u6807\u7B7E"
+  - status: 0
+    name: tenjin_admob_enabled
+    desc: 
+  - status: 0
+    name: tenjin_applovin_enabled
+    desc: 
+  - status: 0
+    name: tenjin_facebook_enabled
+    desc: 
+  - status: 0
+    name: tenjin_hyperbid_enabled
+    desc: 
+  - status: 0
+    name: tenjin_ironsource_enabled
+    desc: 
+  - status: 0
+    name: APP_REVIEW
+    desc: "\u8BC4\u4EF7SDK"

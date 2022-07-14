@@ -171,13 +171,11 @@ public class MathTools
     public static Vector3 GetBezierPoint(Vector3 start, Vector3 mid, Vector3 end, float _t)
     {
         Vector3 t0 = Vector3.Lerp(start, mid, _t);
-        Vector3 t1 = Vector3.Lerp(mid, end, _t);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+        Vector3 t1 = Vector3.Lerp(mid, end, _t);
         Vector3 p = Vector3.Lerp(t0, t1, _t);
         return p;
 
-        // return (1 - t) * ((1 - t) * p0 + t * p1) + t * ((1 - t) * p1 + t * p2);
-        // return ((_t * (end - mid) + mid) - (_t * (mid - start) + start))*_t + (_t * (mid - start) + start);
-        // (_t * (end - mid) + mid) == (1-_t)*mid + _t*end
+        //return (1 - t) * ((1 - t) * p0 + t * p1) + t * ((1 - t) * p1 + t * p2);
     }
 
     public static Vector3 GetBezierPoint(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)

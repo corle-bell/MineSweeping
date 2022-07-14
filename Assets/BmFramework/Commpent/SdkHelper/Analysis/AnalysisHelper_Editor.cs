@@ -51,6 +51,11 @@ namespace Bm.Sdk.Helper
            
         }
 
+        public override void OnGDPRSet(bool isAgree)
+        {
+
+        }
+
         public override void OnAdEvent(AdType adType, AdStatus _status, string _place, string _sdk, string _info)
         {
             Log("OnAdEvent", adType.ToString(), _status.ToString(), _place, _sdk, _info);

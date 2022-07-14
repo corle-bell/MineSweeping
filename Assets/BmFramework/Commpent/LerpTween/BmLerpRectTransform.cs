@@ -14,6 +14,7 @@ namespace Bm.Lerp
         TransAll,
         TransAllLocal,
         AnchoredPosition,
+        SizeDelta,
     }
 
     public class BmLerpRectTransform : BmLerpBase
@@ -26,6 +27,7 @@ namespace Bm.Lerp
         //[HideInInspector]
         public Quaternion[] rotationData;
 
+        public Vector2[] sizeData;
 
         protected override void _Lerp(float _per)
         {
@@ -46,6 +48,9 @@ namespace Bm.Lerp
             {
                 case BmLerpTransformType.AnchoredPosition:
                     rectTransform.anchoredPosition = Vector2.LerpUnclamped(moveData[0], moveData[1], _per);
+                    break;
+                case BmLerpTransformType.SizeDelta:
+                    rectTransform.sizeDelta = Vector2.LerpUnclamped(sizeData[0], sizeData[1], _per);
                     break;
                 case BmLerpTransformType.Rotation:
                     transform.rotation = Quaternion.LerpUnclamped(rotationData[0], rotationData[1], _per);
@@ -77,6 +82,9 @@ namespace Bm.Lerp
             {
                 case BmLerpTransformType.AnchoredPosition:
                     rectTransform.anchoredPosition = Vector2.Lerp(moveData[0], moveData[1], _per);
+                    break;
+                case BmLerpTransformType.SizeDelta:
+                    rectTransform.sizeDelta = Vector2.Lerp(sizeData[0], sizeData[1], _per);
                     break;
                 case BmLerpTransformType.Rotation:
                     transform.rotation = Quaternion.Lerp(rotationData[0], rotationData[1], _per);

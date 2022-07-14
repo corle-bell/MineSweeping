@@ -197,5 +197,10 @@ namespace BmFramework.Core
             }
             Directory.Delete(filePath);
         }
+
+        public string GetFileName(string filePath, string tail)
+        {
+            return Path.GetFileName(filePath).Replace(tail, "");
+        }
     }
 }

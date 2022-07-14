@@ -13,7 +13,7 @@ namespace Bm.EditorTool
     {
         #region Static Method
         [MenuItem("Tools/AssetCreator/打开", false)]
-        static void Open()
+        public static void Open()
         {
             EditorWindow.GetWindow<BmAssetCreator>(false, "AssetCreator", true).Show();
         }

@@ -19,7 +19,7 @@ namespace Bm.EditorTool.Scene
 	public class SceneToolsSetting : ScriptableObject
 	{
 		public FlagType flagFilter;
-		public string scanPath = "Assets/3D";
+		public List<string> scanPath = new List<string>();
 		public List<SceneNode> sceneNodes = new List<SceneNode>();
 		public bool isScan = false;
 		public bool isOnlyShowBuild;

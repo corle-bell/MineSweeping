@@ -17,4 +17,16 @@ namespace Bm.Lerp
         public BmLerpBase lerp;
     }
 
+    [System.Serializable]
+    public class BmLerpBlendShapeNode
+    { 
+        [EnumName("BlendId")]
+        public int Id;
+        [EnumName("区间左值")]
+        public float minInGroup = 0;
+        [EnumName("区间右值")]
+        public float maxInGroup = 1.0f;
+        [EnumName("截断曲线")]
+        public AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
+    }
 }

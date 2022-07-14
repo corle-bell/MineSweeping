@@ -79,6 +79,34 @@ namespace UnityEditor
             trans.eulerAngles = stringToVector3(arr[1]);
         }
 
+        [MenuItem("GameObject/Transform/SwapTransfrom")]
+        public static void SwapTranform()
+        {
+            var trans = Selection.transforms;
+            if(trans.Length!=2)
+            {
+                return;
+            }
+
+            Undo.RecordObject(trans[0], "Trans0");
+            Undo.RecordObject(trans[1], "Trans1");
+
+            var p = trans[0].position;
+            var r = trans[0].rotation;
+            var s = trans[0].localScale;
+
+            trans[0].position = trans[1].position;
+            trans[0].rotation = trans[1].rotation;
+            trans[0].localScale = trans[1].localScale;
+
+
+            trans[1].position = p;
+            trans[1].rotation = r;
+            trans[1].localScale = s;
+
+            
+        }
+
         static string GetStringFromVector3(Vector3 _src)
         {
             return string.Format("({0}, {1}, {2})", _src.x, _src.y, _src.z);

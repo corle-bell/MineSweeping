@@ -83,5 +83,4 @@ public static class MonoBehaviourExtensionMethods
     {
         return _script.transform.FindChildDeep(_RootName).GetComponent<T>();
     }
-
 }

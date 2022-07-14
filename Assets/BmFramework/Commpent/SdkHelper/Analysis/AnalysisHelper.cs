@@ -21,6 +21,8 @@ namespace Bm.Sdk.Helper
         public abstract void PlayLevel(int _level);
 
         public abstract void OnAdEvent(AdType adType, AdStatus _status, string _place, string _sdk, string _info=null);
+
+        public abstract void OnGDPRSet(bool isAgree);
     }
 
     public class AnalysisHelper : SdkBaseHelper
@@ -149,6 +151,21 @@ namespace Bm.Sdk.Helper
                 foreach (var item in analyses)
                 {
                     item.PlayLevel(_level);
+                }
+            }
+            catch (System.Exception e)
+            {
+
+            }
+        }
+
+        public void OnGDPRSet(bool isAgree)
+        {
+            try
+            {
+                foreach (var item in analyses)
+                {
+                    item.OnGDPRSet(isAgree);
                 }
             }
             catch (System.Exception e)

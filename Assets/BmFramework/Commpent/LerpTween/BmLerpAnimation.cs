@@ -78,6 +78,16 @@ namespace Bm.Lerp
             status = 0;
         }
 
+        public void Pause()
+        {
+            status = 99;
+        }
+
+        public void Resume()
+        {
+            status = 1;
+        }
+
 
         private void InitLerp(float _per)
         {

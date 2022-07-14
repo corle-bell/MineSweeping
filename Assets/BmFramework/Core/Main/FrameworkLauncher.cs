@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BmFramework.Core
 {
@@ -14,7 +15,7 @@ namespace BmFramework.Core
 
         [EnumName("设定帧率")]
         public int FrameRate = 60;
-
+        
         private void Awake()
         {
 #if UNITY_EDITOR

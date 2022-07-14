@@ -8,7 +8,7 @@ namespace Bm.Sdk.Helper
 {
     public class AnalysisHelper_TalkingData : AnalysisBaseHelper
     {
-        const string key = "519005C9213C43698F8E14C84C0CFF1A";
+        const string key = "8658BF5E36564BA9AE5F4E2DC88654C8";
         public override void OnApplication(bool isPause)
         {
 
@@ -52,6 +52,11 @@ namespace Bm.Sdk.Helper
             //account.SetLevel(_level);
         }
 
+        public override void OnGDPRSet(bool isAgree)
+        {
+
+        }
+
         public override void OnAdEvent(AdType adType, AdStatus _status, string _place, string _sdk, string _info)
         {
             Dictionary<string, object> _params = new Dictionary<string, object>();
@@ -71,6 +76,8 @@ namespace Bm.Sdk.Helper
                     return "End";
                 case AdStatus.Playing:
                     return "Start";
+                case AdStatus.Ready:
+                    return "Click";
             }
             return "Undefine";
         }

@@ -210,6 +210,16 @@ public static class TransformExtensionMethods
 		return worldRotation;
 	}
 
+	public static Vector3 GetForwardPosition(this Transform transform, float distance)
+    {
+		return transform.position + transform.forward * distance;
+	}
+
+	public static Vector3 GetForwardLocalPostion(this Transform transform, float distance)
+	{
+		return transform.localPosition + transform.forward * distance;
+	}
+
 	public static DG.Tweening.Tween DODirection(this Transform transform, Vector3 _dest, float _time)
     {
 		var tmp = transform.forward;

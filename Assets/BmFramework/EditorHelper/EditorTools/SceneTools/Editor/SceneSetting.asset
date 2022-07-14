@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: SceneSetting
   m_EditorClassIdentifier: 
   flagFilter: 2
-  scanPath: Assets/Game/Scenes
+  scanPath:
+  - Assets/Game
   sceneNodes:
   - name: Main.unity
     fullName: Assets/Game/Scenes/Main.unity
@@ -22,10 +23,24 @@ MonoBehaviour:
     isInBuild: 1
     flag: 4
     isShow: 1
+  - name: CellAutoMap.unity
+    fullName: Assets/Game/Scenes/LifeGame/CellAutoMap.unity
+    assetName: Assets/Game/Scenes/LifeGame/CellAutoMap.unity
+    nickName: CellAutoMap
+    isInBuild: 0
+    flag: 4
+    isShow: 1
   - name: DrawLineSample.unity
     fullName: Assets/Game/Scenes/DrawLine3D/DrawLineSample.unity
     assetName: Assets/Game/Scenes/DrawLine3D/DrawLineSample.unity
     nickName: DrawLineSample
+    isInBuild: 0
+    flag: 4
+    isShow: 1
+  - name: DrawLineSample2D.unity
+    fullName: Assets/Game/Scenes/DrawLine3D/DrawLineSample2D.unity
+    assetName: Assets/Game/Scenes/DrawLine3D/DrawLineSample2D.unity
+    nickName: DrawLineSample2D
     isInBuild: 0
     flag: 4
     isShow: 1
@@ -41,6 +56,13 @@ MonoBehaviour:
     assetName: Assets/Game/Scenes/LifeGame/LifeGame.unity
     nickName: LifeGame
     isInBuild: 1
+    flag: 4
+    isShow: 1
+  - name: Snake.unity
+    fullName: Assets/Game/Scenes/Snake/Snake.unity
+    assetName: Assets/Game/Scenes/Snake/Snake.unity
+    nickName: Snake
+    isInBuild: 0
     flag: 4
     isShow: 1
   isScan: 0

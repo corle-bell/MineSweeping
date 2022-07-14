@@ -23,6 +23,7 @@ namespace BmFramework.Core
         public List<string> NameList = new List<string>();
 
         public float scaleFactor = 1.0f;
+        public float matchWidthOrHeight = 1.0f;
         internal void Init()
         {
             canvas = GetComponentInChildren<Canvas>();
@@ -48,11 +49,11 @@ namespace BmFramework.Core
 
             if (_t < _my_p)
             {
-                scaler.matchWidthOrHeight = 1.0f;
+                matchWidthOrHeight = scaler.matchWidthOrHeight = 1.0f;
             }
             else
             {
-                scaler.matchWidthOrHeight = 0;
+                matchWidthOrHeight = scaler.matchWidthOrHeight = 0;
             }
         }
 

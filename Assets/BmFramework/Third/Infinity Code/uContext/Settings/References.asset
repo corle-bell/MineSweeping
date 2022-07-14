@@ -24,7 +24,7 @@ MonoBehaviour:
     visibleRules: 0
     icon: 0
     iconScale: 1
-    iconSettings: Assets\BmFramework\Third\Infinity Code\uContext/Icons/Save.png
+    iconSettings: Assets\Plugins\Infinity Code\uContext/Icons/Save.png
     useCustomWindowSize: 0
     customWindowSize: {x: 400, y: 300}
   - tooltip: Hierarchy
@@ -37,7 +37,7 @@ MonoBehaviour:
     visibleRules: 1
     icon: 0
     iconScale: 1
-    iconSettings: Assets\BmFramework\Third\Infinity Code\uContext/Icons/Hierarchy2.png
+    iconSettings: Assets\Plugins\Infinity Code\uContext/Icons/Hierarchy2.png
     useCustomWindowSize: 0
     customWindowSize: {x: 400, y: 300}
   - tooltip: Project
@@ -50,7 +50,7 @@ MonoBehaviour:
     visibleRules: 1
     icon: 0
     iconScale: 1
-    iconSettings: Assets\BmFramework\Third\Infinity Code\uContext/Icons/Project.png
+    iconSettings: Assets\Plugins\Infinity Code\uContext/Icons/Project.png
     useCustomWindowSize: 0
     customWindowSize: {x: 400, y: 300}
   - tooltip: Inspector
@@ -63,7 +63,7 @@ MonoBehaviour:
     visibleRules: 1
     icon: 0
     iconScale: 1
-    iconSettings: Assets\BmFramework\Third\Infinity Code\uContext/Icons/Inspector.png
+    iconSettings: Assets\Plugins\Infinity Code\uContext/Icons/Inspector.png
     useCustomWindowSize: 0
     customWindowSize: {x: 400, y: 300}
   - tooltip: Bookmarks
@@ -76,7 +76,7 @@ MonoBehaviour:
     visibleRules: 0
     icon: 0
     iconScale: 1
-    iconSettings: Assets\BmFramework\Third\Infinity Code\uContext/Icons/Star-White.png
+    iconSettings: Assets\Plugins\Infinity Code\uContext/Icons/Star-White.png
     useCustomWindowSize: 0
     customWindowSize: {x: 400, y: 300}
   - tooltip: View Gallery
@@ -102,7 +102,7 @@ MonoBehaviour:
     visibleRules: 0
     icon: 0
     iconScale: 1
-    iconSettings: Assets\BmFramework\Third\Infinity Code\uContext/Icons/Rule.png
+    iconSettings: Assets\Plugins\Infinity Code\uContext/Icons/Rule.png
     useCustomWindowSize: 0
     customWindowSize: {x: 400, y: 300}
   - tooltip: 
@@ -142,21 +142,41 @@ MonoBehaviour:
     useCustomWindowSize: 0
     customWindowSize: {x: 400, y: 300}
   _sceneHistory:
-  - name: CellAutoMap
-    path: Assets/Game/Scenes/LifeGame/CellAutoMap.unity
-  - name: LifeGame
-    path: Assets/Game/Scenes/LifeGame/LifeGame.unity
-  - name: Snake
-    path: Assets/Game/Scenes/Snake/Snake.unity
-  - name: Game
-    path: Assets/Game/Scenes/MineSweeping/Game.unity
-  - name: DrawLineSample
-    path: Assets/Game/Scenes/DrawLine3D/DrawLineSample.unity
-  - name: DrawLineSample2D
-    path: Assets/Game/Scenes/DrawLine3D/DrawLineSample2D.unity
+  - name: FashionMaster
+    path: Assets/3D/FashionMaster/Scenes/FashionMaster.unity
   - name: Main
     path: Assets/Game/Scenes/Main.unity
-  - name: Game
-    path: Assets/Game/Scenes/Game.unity
-  - name: LifeGame
-    path: Assets/Game/Scenes/LifeGame.unity
+  - name: Menu
+    path: Assets/Game/Scenes/Menu.unity
+  - name: RTS_Example_With_New_Syntaxe
+    path: Assets/BmFramework/Third/EasyTouchBundle/EasyTouch/Examples/5.X new features/RTS_Example_With_New_Syntaxe.unity
+  - name: QuickGesture
+    path: Assets/BmFramework/Third/EasyTouchBundle/EasyTouch/Examples/5.X new features/QuickGesture.unity
+  - name: DOTweenAnimation_Basics
+    path: Assets/BmFramework/Third/Demigiant/DOTweenPro Examples/DOTweenAnimation_Basics.unity
+  - name: DOTweenPath
+    path: Assets/BmFramework/Third/Demigiant/DOTweenPro Examples/DOTweenPath.unity
+  - name: SampleScene
+    path: Assets/Scenes/SampleScene.unity
+  - name: Quick Play
+    path: Assets/Plugins/Animancer/Examples/01 Basics/01 Quick Play/Quick Play.unity
+  - name: MakeClothes
+    path: Assets/3D/FashionMaster/Scenes/MakeClothes.unity
+  - name: CatwalkChange
+    path: Assets/3D/CatwalkChange/Scenes/CatwalkChange.unity
+  - name: Main
+    path: Assets/3D/CatwalkChange/Scenes/Main.unity
+  - name: Earth
+    path: Assets/3D/CatwalkChange/Scenes/Earth.unity
+  - name: BlendShapeTest
+    path: Assets/3D/CatwalkChange/Scenes/BlendShapeTest.unity
+  - name: MakeClothes
+    path: Assets/3D/CatwalkChange/Scenes/MakeClothes.unity
+  - name: Ranking
+    path: Assets/3D/CatwalkChange/Scenes/Ranking.unity
+  - name: LoadingScene
+    path: Assets/3D/CatwalkChange/Scenes/LoadingScene.unity
+  - name: Menu
+    path: Assets/3D/CatwalkChange/Scenes/Menu.unity
+  - name: DragCloth
+    path: Assets/3D/CatwalkChange/Scenes/DragCloth.unity

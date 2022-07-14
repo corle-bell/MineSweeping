@@ -5,6 +5,13 @@ using UnityEngine;
 namespace Bm.Lerp
 {
     [System.Serializable]
+    public struct BmLerpMaterialUV
+    {
+        public Vector2 tilling;
+        public Vector2 offset;
+    }
+
+    [System.Serializable]
     public class BmLerpMaterialNode
     {
         public string name;
@@ -12,6 +19,7 @@ namespace Bm.Lerp
         public Color[] colorParams = new Color[] { Color.white, Color.white };
         public float[] floatParams = new float[] { 0, 1 };
         public Vector4[] vecParams = new Vector4[] { Vector4.zero, Vector4.one };
+        public BmLerpMaterialUV[] uvParams = new BmLerpMaterialUV[2];
     }
 
     public enum MaterialParamsLerpType
@@ -19,6 +27,7 @@ namespace Bm.Lerp
         Float,
         Color,
         Vector4,
+        UV,
     }
 
     public class BmLerpMaterial : BmLerpBase
@@ -58,6 +67,10 @@ namespace Bm.Lerp
                     break;
                 case MaterialParamsLerpType.Vector4:
                     mat.SetVector(data.name, Vector4.Lerp(data.vecParams[0], data.vecParams[1], _p));
+                    break;
+                case MaterialParamsLerpType.UV:
+                    mat.SetTextureScale("_MainTex", Vector2.Lerp(data.uvParams[0].tilling, data.uvParams[1].tilling, _p));
+                    mat.SetTextureOffset("_MainTex", Vector2.Lerp(data.uvParams[0].offset, data.uvParams[1].offset, _p));                    
                     break;
             }
         }

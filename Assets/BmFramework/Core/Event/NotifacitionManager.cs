@@ -210,6 +210,24 @@ namespace BmFramework.Core
         /// <param name="type"></param>
         /// <param name="sender"></param>
         /// <param name="_Cmd"></param>
+        /// <param name="_obj"></param>
+        public static void Post(NotifyType type, object sender, string _Cmd, string _obj)
+        {
+            NotifyEvent t = AllocateEvent();
+            t.Type = type;
+            t.Cmd = _Cmd;
+            t.Sender = sender;
+            t.ParamsString = _obj;
+
+            Post(t);
+        }
+
+        /// <summary>
+        /// 发送事件
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="sender"></param>
+        /// <param name="_Cmd"></param>
         /// <param name="_params_int"></param>
         public static void Post(NotifyType type, object sender, string _Cmd, int _params_int)
         {
