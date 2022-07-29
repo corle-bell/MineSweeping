@@ -47,7 +47,15 @@ namespace BmFramework.Core
         {
             if (!EditorApplication.isCompiling && isUpdate)
             {
-                CreateHelper.CreateUIPrefab(prefabDefaultPath, uiName, isAnimation);
+
+                try
+                {
+                    CreateHelper.CreateUIPrefab(prefabDefaultPath, uiName, isAnimation);
+                }
+                catch
+                {
+
+                }
 
                 isUpdate = false;
                 EditorUtility.ClearProgressBar();

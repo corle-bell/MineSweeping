@@ -71,19 +71,19 @@ namespace BmFramework.Core
         public static void CreateUIScript(string _path, string _name, bool isAnimation)
         {
             string _ui_path = string.Format("{0}/{1}.cs", _path, _name);
-            string _ui_designer_path = string.Format("{0}/{1}.Designer.cs", _path, _name);
+            //string _ui_designer_path = string.Format("{0}/{1}.Designer.cs", _path, _name);
 
             string _ui_templete_script_path = string.Format("{0}/{1}.script", UIScript_Path, isAnimation ? "UIAnimtionTemplete" : "UITemplete");
-            string _ui_templete_designer_script_path = string.Format("{0}/{1}.script", UIScript_Path, isAnimation ? "UIAnimtionTemplete.Designer" : "UITemplete.Designer");
+            //string _ui_templete_designer_script_path = string.Format("{0}/{1}.script", UIScript_Path, isAnimation ? "UIAnimtionTemplete.Designer" : "UITemplete.Designer");
 
             string ui_text = File.ReadAllText(_ui_templete_script_path);
-            string ui_designer_text = File.ReadAllText(_ui_templete_designer_script_path);
+            //string ui_designer_text = File.ReadAllText(_ui_templete_designer_script_path);
 
             ui_text = ui_text.Replace("UITemplete", _name);
-            ui_designer_text = ui_designer_text.Replace("UITemplete", _name);
+            //ui_designer_text = ui_designer_text.Replace("UITemplete", _name);
 
             File.WriteAllText(_ui_path, ui_text);
-            File.WriteAllText(_ui_designer_path, ui_designer_text);
+            //File.WriteAllText(_ui_designer_path, ui_designer_text);
         }
     }
 #endif

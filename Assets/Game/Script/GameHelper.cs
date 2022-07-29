@@ -6,21 +6,18 @@ using BmFramework.Core;
 
 public class GameDefine
 {
-    public static string[] levelData = new string[] { "Level01", "Level02", "Level03", "Level04", "Level05", "Level06", "Level07" };
     public static int level = 0;
 }
 public class GameHelper
 {
     public static void LoadLevel()
     {
-        int id = GameDefine.level % GameDefine.levelData.Length;
-        SceneHelper.LoadScene(GameDefine.levelData[id]);
+        
     }
 
     public static void LoadLevelAsync(System.Action<AsyncOperation> callback)
     {
-        int id = GameDefine.level % GameDefine.levelData.Length;
-        SceneHelper.LoadSceneAsync(GameDefine.levelData[id], callback);
+        
     }
 
     public static void RealodLevel()

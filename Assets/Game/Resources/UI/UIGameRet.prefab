@@ -467,6 +467,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  TimeScale: 1
   status: 0
 --- !u!1 &4518325772642686533
 GameObject:
@@ -665,6 +666,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  TimeScale: 1
   status: 0
 --- !u!1 &8706958002991117474
 GameObject:

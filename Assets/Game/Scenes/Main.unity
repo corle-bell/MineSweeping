@@ -844,6 +844,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiList: []
   NameList: []
+  scaleFactor: 1
+  matchWidthOrHeight: 1
 --- !u!1 &2068661989
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,8 +875,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79095ad27786154581335acc69ce1ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LauncheScene: Game
+  LauncheScene: Menu
   LauncheUI: 
+  FrameRate: 60
 --- !u!4 &2068661991
 Transform:
   m_ObjectHideFlags: 0

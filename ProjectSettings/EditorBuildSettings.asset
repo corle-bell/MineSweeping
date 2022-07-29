@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game/Scenes/LifeGame/LifeGame.unity
     guid: 56bafc2c02de64241ae1a8a1291ec249
+  - enabled: 1
+    path: Assets/Game/Scenes/LianLianKan/LianLianKan.unity
+    guid: 0e871bcff8447084f8cafb213501bc79
+  - enabled: 1
+    path: Assets/Game/Scenes/Menu.unity
+    guid: 446c6ce9d14d071488d4b91d89e16620
   m_configObjects: {}

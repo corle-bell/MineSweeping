@@ -10,13 +10,26 @@ namespace BmFramework.Core
     {
         private static void OnWillCreateAsset(string path)
         {
-            path = path.Replace(".meta", "");
+            path = path.Replace(".meta", "");            
             if (path.EndsWith(".cs"))
             {
                 string fileName = FileHandle.instance.GetFileName(path, ".cs");
-                string strContent = EditorHelper.script_init;
-                strContent = strContent.Replace("#AuthorName#", "Cyy").Replace("#CreateDate#", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                strContent = strContent.Replace("#SCRIPTNAME#", fileName).Replace("#NOTRIM#", "//code here");
+                string strContent = File.ReadAllText(path);
+                
+                string title = EditorHelper.script_title;
+                title = title.Replace("#AuthorName#", "Cyy").Replace("#CreateDate#", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                if (strContent.Contains($"{fileName} : MonoBehaviour"))
+                {
+                    strContent = EditorHelper.script_init;
+                    strContent = strContent.Replace("#SCRIPTNAME#", fileName).Replace("#NOTRIM#", "//code here");
+                    strContent = strContent.Replace("#TITLE#", title);
+                }
+                else
+                {   
+                    strContent = strContent.Replace("#TITLE#", title);
+                }
+                
+                
 
                 File.WriteAllText(path, strContent);
                 AssetDatabase.Refresh();

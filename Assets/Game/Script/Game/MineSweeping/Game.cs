@@ -53,7 +53,7 @@ public partial class Game : MonoBehaviour
         NotifacitionManager.AddObserver(NotifyType.Msg_Resouce_Load, this.MsgEvent);
 
         ResManager.instance.frameLoadNum = Width;
-        ResManager.instance.LoadRes("Cell", AllNumber);
+        ResManager.instance.LoadRes("MineSweeping/Cell", AllNumber);
     }
 
     void MsgEvent(NotifyEvent data)

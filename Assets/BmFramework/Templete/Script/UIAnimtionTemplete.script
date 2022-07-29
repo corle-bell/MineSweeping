@@ -1,14 +1,15 @@
-﻿using System.Collections;
+﻿#TITLE#
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BmFramework.Core;
 
-public partial class UITemplete : UIAnimationRoot
+public class UITemplete : UIAnimationRoot
 {
 	public override void OnOpen(object _data=null)
 	{
 	    base.OnOpen(_data);
-        InitChildCommpent();
 	    //do open animtion here
 	}
 

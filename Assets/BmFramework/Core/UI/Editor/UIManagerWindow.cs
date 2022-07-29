@@ -107,7 +107,12 @@ namespace BmFramework.Core
 
                     AssetDatabase.DeleteAsset(t.asset_path);
                     AssetDatabase.DeleteAsset("Assets/Game/Script/UI" + t.name + ".cs");
-                    AssetDatabase.DeleteAsset("Assets/Game/Script/UI" + t.name + ".Designer.cs");
+
+                    string path = Application.dataPath.Replace("Assets", "Assets/Game/Script/UI" + t.name + ".Designer.cs");
+                    if(FileHandle.instance.isExistFile(path))
+                    {
+                        AssetDatabase.DeleteAsset("Assets/Game/Script/UI" + t.name + ".Designer.cs");
+                    }
 
                     AssetDatabase.Refresh();
                 }

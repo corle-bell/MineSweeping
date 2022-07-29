@@ -1,12 +1,4 @@
-//*************************************************
-//----Author:       #AuthorName# 
-//
-//----CreateDate:   #CreateDate#
-//
-//----Desc:         Create By BM
-//
-//**************************************************
-
+#TITLE#
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

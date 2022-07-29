@@ -1,14 +1,16 @@
-﻿using System.Collections;
+﻿#TITLE#
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BmFramework.Core;
 
-public partial class UITemplete : UIRoot
+public class UITemplete : UIRoot
 {
     //called by ui open
     public override void OnOpen(object _data = null)
     {
-        InitChildCommpent();
+        
     }
 
     //called by ui close
