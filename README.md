@@ -35,3 +35,6 @@ DrawPhycisLine
 # 截图
 ![Image text](https://github.com/corle-bell/MineSweeping/blob/main/Screenshoot/map.gif)
 
+# 连连看
+![enter description here](https://github.com/corle-bell/MineSweeping/blob/main/Screenshoot/llk_0.png)
+![enter description here](https://github.com/corle-bell/MineSweeping/blob/main/Screenshoot/llk_1.png)
